@@ -1,3 +1,12 @@
+// Componentsn
+import { GoodActionOfTheDay } from "@/components/goodActionOfTheDay/GoodActionOfTheDay";
+import { Thank } from "@/components/thank/Thank";
+
 export default function Home() {
-  return <h1 className="text-4xl font-bold">Get your mind up</h1>;
+  return (
+    <>
+      <GoodActionOfTheDay />
+      <Thank />
+    </>
+  );
 }

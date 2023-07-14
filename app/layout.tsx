@@ -18,9 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <NavbarMain />
-        <main className="flex flex-col items-center justify-between min-h-screen p-24">
-          {children}
-        </main>
+        <main className="flex flex-col items-center gap-4 min-h-screen p-24">{children}</main>
         <Footer />
       </body>
     </html>
