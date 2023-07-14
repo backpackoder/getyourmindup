@@ -2,6 +2,21 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Run in local, is neccesary database
+```
+docker-compose up -d
+```
+* el -d, significa __detached__
+
+
+* MongoDB url local:
+```
+mongodb://localhost:27017/getyourmindupdb
+```
+
+## Settings the variables of env 
+Rename the file __.env-template__ a __.env__
+
 First, run the development server:
 
 ```bash
