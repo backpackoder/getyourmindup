@@ -4,6 +4,7 @@ export const ROUTES = {
   THANK_FOR_SOMETHING: "/thank",
   RELAX_YOUR_MIND: "/relax-your-mind",
   ABOUT: "/about",
-  DASHBOARD: "/dashboard",
   SIGN_IN: "/sign-in",
+  DASHBOARD: "/dashboard",
+  SETTINGS: "/dashboard/settings",
 };
