@@ -8,6 +8,7 @@ export function GoodActionOfTheDay() {
 
   return (
     <Box
+      component={"article"}
       sx={{
         display: "flex",
         flexDirection: "column",

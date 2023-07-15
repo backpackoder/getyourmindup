@@ -5,6 +5,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 export function Thank() {
   return (
     <Box
+      component={"article"}
       sx={{
         display: "flex",
         flexDirection: "column",
