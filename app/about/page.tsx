@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import PicOfThibaut from "@/assets/imgs/Thibaut - Profile picture.jpg";
-import PicOfMiguel from "@/assets/imgs/Miguel - Profile picture.jpg";
-import Image, { StaticImageData } from "next/image";
+
+// Components
+import { Team } from "./components/Team";
 
 export default function About() {
   return (
@@ -10,14 +10,7 @@ export default function About() {
         About
       </Typography>
 
-      <Box>
-        <Typography variant="h4" component="h3">
-          Who are we?
-        </Typography>
-
-        <Presentation picture={PicOfThibaut} name="Thibaut" />
-        <Presentation picture={PicOfMiguel} name="Miguel" />
-      </Box>
+      <Team />
 
       <Typography variant="h6" component="p">
         This is a website to help you to be a better person. Our mission is to help take care of the
@@ -26,29 +19,6 @@ export default function About() {
         of certified psychologists. It is not intended for people who have strong mental problems,
         for this we recommend that you call one of the numbers that are in the footer or that you
         contact an expert doctor you trust.
-      </Typography>
-    </Box>
-  );
-}
-
-type PresentationProps = {
-  picture: StaticImageData;
-  name: string;
-};
-
-function Presentation({ picture, name }: PresentationProps) {
-  return (
-    <Box>
-      <Image
-        src={picture}
-        alt={`Picture of ${name}`}
-        width={200}
-        height={200}
-        className="rounded-full"
-      />
-
-      <Typography variant="h5" component="h4">
-        {name}
       </Typography>
     </Box>
   );
