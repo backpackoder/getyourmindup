@@ -4,6 +4,10 @@ export const ROUTES = {
   THANK_FOR_SOMETHING: "/thank",
   RELAX_YOUR_MIND: "/relax",
   ABOUT: "/about",
+  BLOG: {
+    HOME: "/blog",
+    ARTICLE: (title: string) => `/blog/${title}`,
+  },
   USERS: "/users",
 
   AUTH: {
