@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-Run in local, is neccesary database
+Run in local, is neccesary database !
 ```
 docker-compose up -d
 ```
