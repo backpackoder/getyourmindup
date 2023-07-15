@@ -13,8 +13,8 @@ export const ROUTES = {
 
   DASHBOARD: {
     HOME: "/dashboard",
-    MY_ACTIONS: "/dashboard/actions",
-    MY_THANKS: "/dashboard/thanks",
+    MY_ACTIONS: "/dashboard/my-actions",
+    MY_THANKS: "/dashboard/my-thanks",
     MY_FAVORITES: "/dashboard/favorites",
     SETTINGS: "/dashboard/settings",
   },
