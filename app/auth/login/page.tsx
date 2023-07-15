@@ -17,7 +17,6 @@ import {
 import { AuthLayout } from "@/components/layouts/authLayout";
 import { validations } from "@/utils";
 import { ErrorOutline } from "@mui/icons-material";
-import { AuthContext } from "@/context";
 import { redirect, useRouter } from "next/navigation";
 
 type FormData = {

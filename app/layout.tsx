@@ -7,8 +7,7 @@ import { NavbarMain } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from '@/theme';
-import { AuthProvider } from "@/context";
-import { SessionProvider } from "next-auth/react";
+import { AuthSessionProvider } from "@/context/auth/AuthSessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,15 +21,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
     <html lang="en">
       <body className={inter.className}>
-        <SessionProvider>
-          <AuthProvider >
+        <AuthSessionProvider>
             <ThemeProvider theme={lightTheme}>
               <NavbarMain />
               <main className="flex flex-col items-center gap-4 min-h-screen p-24">{children}</main>
               <Footer />
             </ThemeProvider>
-          </AuthProvider>
-        </SessionProvider>
+        </AuthSessionProvider>
       </body>
     </html>
   );

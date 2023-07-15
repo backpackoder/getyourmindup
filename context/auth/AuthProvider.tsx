@@ -15,10 +15,10 @@ export interface AuthState {
   user?: IUser;
 }
 
-export const AuthInitialState: AuthState = {
-  isLoggedIn: false,
-  user: undefined,
-};
+// export const AuthInitialState: AuthState = {
+//   isLoggedIn: false,
+//   user: undefined,
+// };
 
 interface Props {
   children: JSX.Element | JSX.Element[]
@@ -27,7 +27,10 @@ interface Props {
 export const AuthProvider: FC<Props> = ({ children }) => {
   // const { replace, reload, query } = useRouter()
   const { data, status } = useSession()
-  const [state, dispatch] = useReducer(authReducer, AuthInitialState);
+  const [state, dispatch] = useReducer(authReducer, {
+    isLoggedIn: false,
+    user: undefined,
+  });
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -107,8 +110,8 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     // reload();
   }
   return (
-      <AuthContext.Provider value={{ ...state, onLoginUser, onRegisterUser, onLogout }}>
-        {children}
-      </AuthContext.Provider>
+    <AuthContext.Provider value={{ ...state, onLoginUser, onRegisterUser, onLogout }}>
+      {children}
+    </AuthContext.Provider>
   )
 };
