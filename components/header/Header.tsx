@@ -3,22 +3,22 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
-import { FaHandHoldingHeart, FaHome, FaMusic, FaPray } from "react-icons/fa";
+import { Home, VolunteerActivism, Diversity1, SelfImprovement } from "@mui/icons-material";
 
 // Components
 import { Logo } from "../Logo";
 import { HamburgerMenu } from "./HamburgerMenu";
-// import { SignInButton } from "../AuthButtons";
+import { SignInButton } from "../AuthButtons";
 
 // Commons
 import { ROUTES } from "@/commons/commons";
 const { GOOD_ACTION_OF_THE_DAY, HOME, RELAX_YOUR_MIND, THANK_FOR_SOMETHING } = ROUTES;
 
 const routes = [
-  { icon: <FaHome />, label: "Home", path: HOME },
-  { icon: <FaHandHoldingHeart />, label: "Good action of the day", path: GOOD_ACTION_OF_THE_DAY },
-  { icon: <FaPray />, label: "Thank for something", path: THANK_FOR_SOMETHING },
-  { icon: <FaMusic />, label: "Relax your mind", path: RELAX_YOUR_MIND },
+  { icon: <Home />, label: "Home", path: HOME },
+  { icon: <VolunteerActivism />, label: "Good action of the day", path: GOOD_ACTION_OF_THE_DAY },
+  { icon: <Diversity1 />, label: "Thank for something", path: THANK_FOR_SOMETHING },
+  { icon: <SelfImprovement />, label: "Relax your mind", path: RELAX_YOUR_MIND },
 ];
 type Routes = typeof routes;
 
@@ -72,8 +72,7 @@ function NavBarItem({ routes, setIsOpen }: NavBarItemProps) {
         );
       })}
       <li className="w-full">
-        {/* <SignInButton setIsOpen={setIsOpen} /> */}
-        SignInButton
+        <SignInButton setIsOpen={setIsOpen} />
       </li>
     </ul>
   );

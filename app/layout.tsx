@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 // Components
+import { AuthProvider } from "./AuthProvider";
 import { NavbarMain } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 
@@ -15,12 +16,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <NavbarMain />
-        <main className="flex flex-col items-center gap-4 min-h-screen p-24">{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <NavbarMain />
+          <main className="flex flex-col items-center gap-4 min-h-screen p-24">{children}</main>
+          <Footer />
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

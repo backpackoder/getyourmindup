@@ -1,13 +1,43 @@
+"use client";
+
+import { Box, Button, TextField, Typography } from "@mui/material";
+
 export function Thank() {
   return (
-    <article className="flex flex-col items-center justify-center gap-4 bg-blue-100 p-8 rounded-xl shadow-lg">
-      <h1 className="text-4xl font-bold">Thank for something</h1>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 4,
+        width: "100%",
+        padding: 4,
+        border: "1px solid black",
+        borderRadius: 4,
+        boxShadow: "lg",
+      }}
+    >
+      <Typography variant="h3" component="h2">
+        Thank for something
+      </Typography>
 
-      <textarea className="w-full" placeholder="Your message"></textarea>
+      <Typography variant="h6" component="p">
+        Give a thank for something that happened today that made you happy or that you are grateful
+        for.
+      </Typography>
 
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <TextField
+        id="outlined-multiline-static"
+        label="Give a thank"
+        multiline
+        minRows={4}
+        className="w-full"
+      />
+
+      <Button variant="contained" onClick={() => {}}>
         I wanna thank for that today
-      </button>
-    </article>
+      </Button>
+    </Box>
   );
 }

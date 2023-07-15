@@ -1,55 +1,99 @@
 "use client";
 
 import { useState } from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
 
 export function GoodActionOfTheDay() {
-  const [isClicked, setIsClicked] = useState(false);
+  const [hasClicked, setHasClicked] = useState(false);
 
   return (
-    <article className="flex flex-col items-center justify-center gap-4 bg-blue-100 p-8 rounded-xl shadow-lg">
-      <h1 className="text-4xl font-bold">Good action of the day</h1>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 4,
+        width: "100%",
+        padding: 4,
+        border: "1px solid black",
+        borderRadius: 4,
+        boxShadow: "lg",
+      }}
+    >
+      <Typography variant="h3" component="h2">
+        The good action to realize for today is...
+      </Typography>
 
-      <p className="text-2xl">Make a new friend</p>
+      <Box
+        sx={{
+          backgroundColor: "rgb(240,240,240)",
+          py: 2,
+          px: 4,
+          border: "1px solid black",
+          borderRadius: 4,
+          boxShadow: "lg",
+        }}
+      >
+        <Typography variant="h4" component="p">
+          Make a new friend
+        </Typography>
+      </Box>
 
-      {isClicked ? (
-        <Comment setIsClicked={setIsClicked} />
+      {hasClicked ? (
+        <Comment setHasClicked={setHasClicked} />
       ) : (
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => setIsClicked(true)}
-        >
+        <Button variant="contained" onClick={() => setHasClicked(true)}>
           I did it!
-        </button>
+        </Button>
       )}
-    </article>
+    </Box>
   );
 }
 
 type CommentProps = {
-  setIsClicked: (value: boolean) => void;
+  setHasClicked: (value: boolean) => void;
 };
 
-function Comment({ setIsClicked }: CommentProps) {
+function Comment({ setHasClicked }: CommentProps) {
   return (
-    <div>
-      <h3>Explain us how you did it and how you felt doing so</h3>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 4,
+      }}
+    >
+      <Typography>Explain us how you did it and how you felt doing so:</Typography>
 
-      <textarea className="w-full" placeholder="Your message"></textarea>
+      <TextField
+        id="outlined-multiline-static"
+        label="Explain"
+        multiline
+        minRows={4}
+        className="w-full"
+      />
 
-      <div className="flex flex-wrap items-center justify-center gap-8">
-        <button
-          className="bg-red-200 duration-150 hover:bg-red-400 p-2 rounded-lg"
-          onClick={() => setIsClicked(false)}
-        >
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 4,
+        }}
+      >
+        {/* <Box className="flex flex-wrap items-center justify-center gap-8"> */}
+        <Button variant="contained" onClick={() => setHasClicked(false)}>
           Cancel
-        </button>
-        <button
-          className="bg-green-200 duration-150 hover:bg-green-400 p-2 rounded-lg"
-          onClick={() => {}}
-        >
+        </Button>
+
+        <Button variant="contained" onClick={() => {}}>
           Confirm
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Box>
+    </Box>
   );
 }
