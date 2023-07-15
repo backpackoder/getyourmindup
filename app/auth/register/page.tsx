@@ -130,3 +130,5 @@ const RegisterPage = ({ searchParams,
     </AuthLayout>
   );
 };
+
+export default RegisterPage;

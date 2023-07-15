@@ -24,9 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider>
-
           <AuthProvider >
-
             <ThemeProvider theme={lightTheme}>
               <NavbarMain />
               <main className="flex flex-col items-center gap-4 min-h-screen p-24">{children}</main>
