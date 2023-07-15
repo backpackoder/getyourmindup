@@ -16,7 +16,7 @@ export function AuthCheck({ children }: { children: React.ReactNode }) {
   }
 
   if (status === "unauthenticated") {
-    redirect(ROUTES.SIGN_IN);
+    redirect(ROUTES.AUTH.SIGN_IN);
   }
 
   return <>{children}</>;
