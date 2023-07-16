@@ -6,11 +6,13 @@ const publicationSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     body: { type: String, required: true },
+    isPrivate: { type: Boolean, default: true, required: true },
     type: {
       type: String, enum: {
         values: ["gratitude", "article"],
         message: "{VALUE} not a valid type",
         default: "gratitude",
+        required: true,
       }
     },
   },
