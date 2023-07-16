@@ -2,8 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { useContext } from "react";
-import { Box, Button, Drawer, List } from "@mui/material";
-import { Login } from "@mui/icons-material";
+import { Box, Drawer, List } from "@mui/material";
 
 // Contexts
 import { AuthContext, UiContext } from "@/context";
@@ -13,9 +12,6 @@ import { ListItemTemplate } from "./ListItemTemplate";
 
 // Utils
 import { NAVBAR_ITEMS } from "@/utils/navbarItems";
-
-// Commons
-import { ROUTES } from "@/commons/commons";
 
 export const SideMenu = () => {
   const router = useRouter();

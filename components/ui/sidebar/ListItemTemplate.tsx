@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
 type ListItemTemplateProps = {
@@ -8,6 +8,7 @@ type ListItemTemplateProps = {
 };
 
 export function ListItemTemplate({ navigateTo, route, isActive }: ListItemTemplateProps) {
+  const asPath = usePathname();
   const router = useRouter();
 
   return (
@@ -19,7 +20,15 @@ export function ListItemTemplate({ navigateTo, route, isActive }: ListItemTempla
           backgroundColor: "primary.light",
         },
       }}
-      onClick={() => (navigateTo ? navigateTo(route.path) : router.push(route.path))}
+      onClick={() =>
+        navigateTo
+          ? navigateTo(
+              route.label === "Sign in" || route.label === "Sign up"
+                ? route.path(asPath)
+                : route.path
+            )
+          : router.push(route.path)
+      }
     >
       <ListItemIcon>{route.icon}</ListItemIcon>
       <ListItemText
