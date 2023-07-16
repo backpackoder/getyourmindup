@@ -3,7 +3,6 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
 import { AppBar, Box, Button, List, Toolbar } from "@mui/material";
-import { Login, Logout } from "@mui/icons-material";
 
 // Contexts
 import { AuthContext, UiContext } from "@/context";
@@ -14,28 +13,17 @@ import { ListItemTemplate } from "../ui/sidebar/ListItemTemplate";
 
 // Utils
 import { NAVBAR_ITEMS } from "@/utils/navbarItems";
-import { ROUTES } from "@/commons/commons";
 
 export function NavbarMain() {
   const asPath = usePathname();
-  const router = useRouter();
-  const { toggleSideMenu } = useContext(UiContext);
-
-  const navigateTo = (url: string) => {
-    toggleSideMenu();
-    router.push(url);
-  };
 
   return (
     <AppBar>
       <Toolbar>
         <Logo width={35} height={35} />
 
-        <Box flex={1} />
-        <Box sx={{ display: { xs: "none", sm: "block" } }} className="fadeIn"></Box>
-        <Box flex={1} />
+        <Separator />
 
-        {/* A VER QUE PASA PQ ESTA MUY GRANDE POR AHORA */}
         <List
           sx={{
             display: { xs: "none", md: "flex" },
@@ -44,24 +32,25 @@ export function NavbarMain() {
           {NAVBAR_ITEMS.APP.primary.map((route) => {
             const isActive = asPath === route.path;
 
-            return (
-              <ListItemTemplate
-                key={route.path}
-                navigateTo={navigateTo}
-                route={route}
-                isActive={isActive}
-              />
-            );
+            return <ListItemTemplate key={route.path} route={route} isActive={isActive} />;
           })}
         </List>
 
-        <Box flex={1} />
-        <Box sx={{ display: { xs: "none", sm: "block" } }} className="fadeIn"></Box>
-        <Box flex={1} />
+        <Separator />
 
         <Buttons />
       </Toolbar>
     </AppBar>
+  );
+}
+
+function Separator() {
+  return (
+    <>
+      <Box flex={1} />
+      <Box sx={{ display: { xs: "none", sm: "block" } }} className="fadeIn"></Box>
+      <Box flex={1} />
+    </>
   );
 }
 

@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
 type ListItemTemplateProps = {
@@ -7,6 +8,8 @@ type ListItemTemplateProps = {
 };
 
 export function ListItemTemplate({ navigateTo, route, isActive }: ListItemTemplateProps) {
+  const router = useRouter();
+
   return (
     <ListItem
       sx={{
@@ -16,7 +19,7 @@ export function ListItemTemplate({ navigateTo, route, isActive }: ListItemTempla
           backgroundColor: "primary.light",
         },
       }}
-      onClick={() => navigateTo && navigateTo(route.path)}
+      onClick={() => (navigateTo ? navigateTo(route.path) : router.push(route.path))}
     >
       <ListItemIcon>{route.icon}</ListItemIcon>
       <ListItemText
