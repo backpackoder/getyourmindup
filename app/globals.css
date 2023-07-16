@@ -48,3 +48,8 @@ body {
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}
