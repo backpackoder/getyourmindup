@@ -1,23 +1,9 @@
 "use client";
-import React, { useContext, useState } from "react";
+
 import Link from "next/link";
+import React, { useContext, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  Button,
-  IconButton,
-  Badge,
-  Input,
-  InputAdornment,
-} from "@mui/material";
-import {
-  ClearOutlined,
-  SearchOutlined,
-  ShoppingCartOutlined,
-} from "@mui/icons-material";
+import { AppBar, Toolbar, Box, Button } from "@mui/material";
 import { UiContext } from "@/context";
 
 import { Home, VolunteerActivism, Diversity1, SelfImprovement } from "@mui/icons-material";
@@ -35,9 +21,8 @@ const routes = [
 
 type Routes = typeof routes;
 
-
 export const Navbar = () => {
-  const { toggleSideMenu, isMenuOpen } = useContext(UiContext);
+  const { toggleSideMenu } = useContext(UiContext);
   const { push } = useRouter();
   const asPath = usePathname();
   const [searchTerm, setSearchTerm] = useState("");
@@ -51,16 +36,14 @@ export const Navbar = () => {
   return (
     <AppBar>
       <Toolbar>
-        <Link
-          href="/"
-          passHref
-          style={{ display: "flex", alignItems: "center" }}
-        >
+        <Link href="/" passHref style={{ display: "flex", alignItems: "center" }}>
           <Logo width={35} height={35} />
         </Link>
         <Box flex={1} />
-        <Box sx={{ display: isSearchVisible ? 'none' : { xs: "none", sm: "block" } }} className="fadeIn" >
-
+        <Box
+          sx={{ display: isSearchVisible ? "none" : { xs: "none", sm: "block" } }}
+          className="fadeIn"
+        >
           {routes.map((route, index) => {
             // const isActive = pathname === route.path;
 
@@ -70,7 +53,7 @@ export const Navbar = () => {
                   {route.label}
                 </Button>
               </Link>
-            )
+            );
             // return (
             //   <li
             //     key={index}
@@ -87,7 +70,6 @@ export const Navbar = () => {
             //   </li>
             // );
           })}
-
         </Box>
 
         <Box flex={1} />

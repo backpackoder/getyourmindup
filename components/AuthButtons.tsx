@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
@@ -22,14 +22,10 @@ import { styles } from "@/assets/styles/styles";
 import { ROUTES } from "@/commons/commons";
 const { AUTH, DASHBOARD } = ROUTES;
 
-export function SignInButton({
-  setIsOpen,
-}: {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export function SignInButton() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
-  const {push} = useRouter();
+  const { push } = useRouter();
   const [isProfileSubMenuOpen, setIsProfileSubMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +35,7 @@ export function SignInButton({
     { icon: <Diversity1 />, label: "My thanks", path: DASHBOARD.MY_THANKS },
     { icon: <Favorite />, label: "My favorites", path: DASHBOARD.MY_FAVORITES },
     { icon: <Settings />, label: "Settings", path: DASHBOARD.SETTINGS },
-    { icon: <Logout />, label: "Sign out", path: AUTH.SIGN_OUT },
+    { icon: <Logout />, label: "Sign out", path: AUTH.LOG_OUT },
   ];
 
   useEffect(() => {
@@ -64,8 +60,10 @@ export function SignInButton({
 
   if (status === "unauthenticated") {
     return (
-      <button className="flex items-center gap-2 w-max"  onClick={() => push(`/auth/login?p=${pathname}`)}>
-        {/* <FaSignInAlt /> */}
+      <button
+        className="flex items-center gap-2 w-max"
+        onClick={() => push(`/auth/login?p=${pathname}`)}
+      >
         <Login /> Sign in
       </button>
     );
@@ -73,7 +71,6 @@ export function SignInButton({
 
   function handleClick() {
     setIsProfileSubMenuOpen((prev) => !prev);
-    setIsOpen((prev) => !prev);
   }
 
   return (

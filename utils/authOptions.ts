@@ -6,7 +6,6 @@ import Credentials from "next-auth/providers/credentials";
 import { dbUsers } from "@/db";
 
 export const authOptions: NextAuthOptions = {
-  // adapter: MongoDBAdapter(clientPromise),
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
@@ -26,7 +25,7 @@ export const authOptions: NextAuthOptions = {
         email: {
           label: "Correo",
           type: "email",
-          placeholder: "correo@google.com",
+          placeholder: "mail@google.com",
         },
         password: {
           label: "Contraseña",
@@ -35,7 +34,7 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        console.log({credentials});
+        console.log({ credentials });
         return (await dbUsers.checkUserEmailPassword(
           credentials!.email,
           credentials!.password
@@ -45,13 +44,13 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/auth/login',
-    newUser: '/auth/register'
+    signIn: "/auth/login",
+    newUser: "/auth/register",
   },
   jwt: {},
   session: {
     maxAge: 2592000, // 1 month
-    strategy: 'jwt',
+    strategy: "jwt",
     updateAge: 86400, // 1 day
   },
 

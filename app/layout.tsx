@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 import { NavbarMain } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { lightTheme } from '@/theme';
+import { lightTheme } from "@/theme";
 import { AuthSessionProvider } from "@/context/auth/AuthSessionProvider";
 import { UiProvider } from "@/context";
 import { SideMenu } from "@/components/ui";
@@ -20,7 +20,6 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-
     <html lang="en">
       <body className={inter.className}>
         <AuthSessionProvider>
