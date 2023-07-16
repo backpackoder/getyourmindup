@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,7 +29,7 @@ export function SignInButton({
 }) {
   const pathname = usePathname();
   const { data: session, status } = useSession();
-
+  const {push} = useRouter();
   const [isProfileSubMenuOpen, setIsProfileSubMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -64,7 +64,7 @@ export function SignInButton({
 
   if (status === "unauthenticated") {
     return (
-      <button className="flex items-center gap-2 w-max" onClick={() => signIn()}>
+      <button className="flex items-center gap-2 w-max"  onClick={() => push(`/auth/login?p=${pathname}`)}>
         {/* <FaSignInAlt /> */}
         <Login /> Sign in
       </button>
