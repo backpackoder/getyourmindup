@@ -1,13 +1,14 @@
 "use client";
 import { createContext } from "react";
 import { IUser } from "@/interfaces";
+import { FormDataUser } from "@/app/auth/register/page";
 
 interface ContextProps {
   isLoggedIn: boolean;
   user?: IUser;
   onLogout: () => void;
   onLoginUser: (email: string, password: string) => Promise<boolean>;
-  onRegisterUser: (name: string, email: string, password: string) => Promise<{ hasError: boolean; message?: string; }>;
+  onRegisterUser: (newUser:FormDataUser) => Promise<{ hasError: boolean; message?: string; }>;
 }
 
 export const AuthContext = createContext({} as ContextProps);

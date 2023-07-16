@@ -7,13 +7,13 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1E1E1E'
+      main: '#2196f3'
     },
     secondary: {
-      main: '#3A64D8'
+      main: '#4dabf5'
     },
     info: {
-      main: '#fff'
+      main: '#3f50b5'
     }
   },
   components: {
@@ -55,18 +55,19 @@ export const lightTheme = createTheme({
 
     MuiButton: {
       defaultProps: {
-        variant: 'contained',
+        variant: 'outlined',
         size: 'small',
-        disableElevation: true,
+        disableElevation: false,
         color: 'info',
       },
       styleOverrides: {
         root: {
           textTransform: 'none',
-          boxShadow: 'none',
-          borderRadius: 10,
+          // boxShadow: 'none',
+          borderRadius: 30,
           ":hover": {
-            backgroundColor: 'rgba(0,0,0,0.05)',
+            // backgroundColor: '#2196f3',
+            // color: '#212121',
             transition: 'all 0.3s ease-in-out'
           }
         }

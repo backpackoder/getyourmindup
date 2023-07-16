@@ -9,16 +9,17 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
+import { FormDataUser } from "@/app/auth/register/page";
 
 export interface AuthState {
   isLoggedIn: boolean;
   user?: IUser;
 }
 
-// export const AuthInitialState: AuthState = {
-//   isLoggedIn: false,
-//   user: undefined,
-// };
+export const AuthInitialState: AuthState = {
+  isLoggedIn: false,
+  user: undefined,
+};
 
 interface Props {
   children: JSX.Element | JSX.Element[]
@@ -27,10 +28,7 @@ interface Props {
 export const AuthProvider: FC<Props> = ({ children }) => {
   // const { replace, reload, query } = useRouter()
   const { data, status } = useSession()
-  const [state, dispatch] = useReducer(authReducer, {
-    isLoggedIn: false,
-    user: undefined,
-  });
+  const [state, dispatch] = useReducer(authReducer, AuthInitialState);
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -71,9 +69,9 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     }
   }
 
-  const onRegisterUser = async (name: string, email: string, password: string): Promise<{ hasError: boolean; message?: string; }> => {
+  const onRegisterUser = async (newUser:FormDataUser): Promise<{ hasError: boolean; message?: string; }> => {
     try {
-      const { data } = await getYourMindUpApi.post('/user/register', { name, email, password });
+      const { data } = await getYourMindUpApi.post('/user/register', { ...newUser });
       const { token, user } = data;
       Cookies.set('token', token);
       dispatch({ type: 'Auth - Login', payload: user });
@@ -95,15 +93,6 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   }
 
   const onLogout = () => {
-    Cookies.remove('cart');
-    Cookies.remove('firstName');
-    Cookies.remove('lastName');
-    Cookies.remove('address');
-    Cookies.remove('address2');
-    Cookies.remove('zip');
-    Cookies.remove('city');
-    Cookies.remove('country');
-    Cookies.remove('phone');
     signOut();
 
     // Cookies.remove('token');
