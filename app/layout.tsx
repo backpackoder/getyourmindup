@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 import { NavbarMain } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { ThemeProvider } from "@mui/material";
-import { lightTheme } from '@/theme';
+import { lightTheme } from "@/theme";
 import { AuthSessionProvider } from "@/context/auth/AuthSessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,15 +18,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-
     <html lang="en">
       <body className={inter.className}>
         <AuthSessionProvider>
-            <ThemeProvider theme={lightTheme}>
-              <NavbarMain />
-              <main className="flex flex-col items-center gap-4 min-h-screen p-24">{children}</main>
-              <Footer />
-            </ThemeProvider>
+          <ThemeProvider theme={lightTheme}>
+            <NavbarMain />
+            <main className="flex flex-col items-center gap-4 min-h-screen p-4 mt-16 md:mt-0">
+              {children}
+            </main>
+            <Footer />
+          </ThemeProvider>
         </AuthSessionProvider>
       </body>
     </html>

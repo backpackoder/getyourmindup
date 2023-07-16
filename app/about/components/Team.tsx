@@ -6,7 +6,16 @@ import { OWNERS } from "@/commons/commons";
 
 export function Team() {
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
+        bgcolor: "lightblue",
+        p: 4,
+        borderRadius: "1rem",
+      }}
+    >
       <Typography variant="h4" component="h3">
         Who are we?
       </Typography>
@@ -16,7 +25,6 @@ export function Team() {
           display: "flex",
           flexDirection: "column",
           gap: 4,
-          border: "1px solid black",
         }}
       >
         <Presentation person={OWNERS.MIGUEL} />

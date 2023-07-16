@@ -13,7 +13,7 @@ export function HamburgerMenu({ setIsOpen }: HamburgerMenuProps) {
     <div
       className="absolute top-0 right-[1px] translate-x-full w-[75px] h-[75px] bg-[rgb(240,240,240)]
       rounded-se-xl rounded-ee-xl shadow-inner cursor-pointer
-        sm:hidden"
+        md:hidden"
       onClick={() => setIsOpen((prev) => !prev)}
     >
       <div className="relative w-full h-full rounded-se-xl rounded-ee-xl">

@@ -1,6 +1,6 @@
 // Assets
-import PicOfThibaut from "@/assets/imgs/Thibaut - Profile picture.jpg";
-import PicOfMiguel from "@/assets/imgs/Miguel - Profile picture.jpg";
+import PicOfThibaut from "@/assets/imgs/owners/Thibaut - Profile picture.jpg";
+import PicOfMiguel from "@/assets/imgs/owners/Miguel - Profile picture.jpg";
 
 export const ROUTES = {
   HOME: "/",

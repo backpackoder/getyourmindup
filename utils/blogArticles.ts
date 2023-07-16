@@ -1,7 +1,10 @@
+// Assets
+import TheImportanceOfMentalHealth from "@/assets/imgs/articles/Blog article - The importance of mental health.jpg";
+
 export const ARTICLES = [
   {
-    id: 1,
     title: `The importance of mental health`,
+    image: TheImportanceOfMentalHealth,
     introduction: `In our fast-paced and interconnected world, mental health has become a
         significant concern that deserves our utmost attention. Just as physical health is
         essential, our mental well-being plays a vital role in leading a fulfilling and balanced
