@@ -15,8 +15,9 @@ export const ROUTES = {
   USERS: "/users",
 
   AUTH: {
-    SIGN_IN: "/api/auth/signin",
-    SIGN_OUT: "/api/auth/signout",
+    SIGN_UP: (asPath: string) => `/auth/signup?p=${asPath}`,
+    LOG_IN: (asPath: string) => `/auth/login?p=${asPath}`,
+    LOG_OUT: "/api/auth/signout",
   },
 
   DASHBOARD: {

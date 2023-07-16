@@ -45,12 +45,11 @@ const LoginPage = ({
       setProviders(prov);
     });
   }, []);
-
+ 
   const onLoginForm = async ({ email, password }: FormData) => {
-    console.log('object');
     setShowError(false);
-    const data = await signIn("credentials", { email, password });
-    console.log(data);
+    await signIn("credentials", { email, password });
+
     // const isValidLogin = await onLoginUser(email, password);
     // if (!isValidLogin) {
     //   setShowError(true)
@@ -70,7 +69,7 @@ const LoginPage = ({
                 Iniciar Sesión
               </Typography>
               <Chip
-                label="no reconocemos ese usuario"
+                label="we don't recognize that user"
                 sx={{ display: showError ? "flex" : "none" }}
                 icon={<ErrorOutline />}
                 color="error"
@@ -79,7 +78,7 @@ const LoginPage = ({
             </Grid>
             <Grid item xs={12} mt={2}>
               <TextField
-                label="Correo"
+                label="Email"
                 type="email"
                 {...register("email", {
                   required: "Este campo es requerido",
@@ -93,7 +92,7 @@ const LoginPage = ({
             </Grid>
             <Grid item xs={12} mt={2}>
               <TextField
-                label="Contraseña"
+                label="Password"
                 type="password"
                 variant="filled"
                 fullWidth
@@ -107,16 +106,15 @@ const LoginPage = ({
             </Grid>
             <Grid item xs={12} mt={2}>
               <Button
-                color="secondary"
-                className="circular-btn"
                 size="large"
                 fullWidth
                 type="submit"
                 disabled={showError}
               >
-                ingresar
+                Ingresar
               </Button>
             </Grid>
+
             <Grid item xs={12} display="flex" justifyContent="end" mt={1}>
               <Link
                 href={`/auth/register?p=${searchParams?.p?.toString() || "/"}`}
@@ -149,6 +147,7 @@ const LoginPage = ({
                   </Button>
                 );
               })}
+
             </Grid>
           </Grid>
         </Box>

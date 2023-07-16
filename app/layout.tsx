@@ -5,9 +5,11 @@ import { Inter } from "next/font/google";
 // Components
 import { NavbarMain } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { lightTheme } from "@/theme";
 import { AuthSessionProvider } from "@/context/auth/AuthSessionProvider";
+import { UiProvider } from "@/context";
+import { SideMenu } from "@/components/ui";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,13 +23,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <AuthSessionProvider>
-          <ThemeProvider theme={lightTheme}>
-            <NavbarMain />
-            <main className="flex flex-col items-center gap-4 min-h-screen p-4 mt-16 md:mt-0">
-              {children}
-            </main>
-            <Footer />
-          </ThemeProvider>
+          <UiProvider>
+            <ThemeProvider theme={lightTheme}>
+              <CssBaseline />
+              <nav>
+                <NavbarMain />
+              </nav>
+              <SideMenu />
+              <main className="flex flex-col items-center gap-4 min-h-screen p-24">{children}</main>
+              <Footer />
+            </ThemeProvider>
+          </UiProvider>
         </AuthSessionProvider>
       </body>
     </html>
