@@ -1,11 +1,7 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { useContext } from "react";
-import { AppBar, Box, Button, List, Toolbar } from "@mui/material";
-
-// Contexts
-import { AuthContext, UiContext } from "@/context";
+import { usePathname } from "next/navigation";
+import { AppBar, List, Toolbar } from "@mui/material";
 
 // Components
 import { Logo } from "../Logo";
@@ -13,6 +9,8 @@ import { ListItemTemplate } from "../ui/sidebar/ListItemTemplate";
 
 // Utils
 import { NAVBAR_ITEMS } from "@/utils/navbarItems";
+import { Separator } from "./components/Separator";
+import { Buttons } from "./components/Buttons";
 
 export function NavbarMain() {
   const asPath = usePathname();
@@ -74,3 +72,4 @@ function Buttons() {
     </Box>
   );
 }
+

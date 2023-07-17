@@ -1,14 +1,16 @@
 "use client";
-import { FC, useEffect, useReducer, useState } from "react";
+import { FC, useReducer, useState } from "react";
 import { UiContext, uiReducer } from ".";
-import { Alert, Box, Snackbar } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 
 export interface UiState {
   isMenuOpen: boolean;
+  isDashboardMenuOpen: boolean;
 }
 
 export const UiInitialState: UiState = {
   isMenuOpen: false,
+  isDashboardMenuOpen: false,
 };
 
 interface Props {
@@ -22,8 +24,11 @@ export const UiProvider: FC<Props> = ({ children }) => {
 
 
   const toggleSideMenu = () => dispatch({ type: "[UI] - ToggleMenu" });
+  const toggleMenu = () => dispatch({ type: "[UI] - openMenu" });
+  const toggleDashboardMenu = () => dispatch({ type: "[UI] - openDashboardMenu" });
+
   return (
-    <UiContext.Provider value={{ ...state, toggleSideMenu, setOpenSnackbarSuccess, setOpenSnackbarError }}>
+    <UiContext.Provider value={{ ...state, toggleSideMenu, setOpenSnackbarSuccess, setOpenSnackbarError, toggleMenu, toggleDashboardMenu }}>
 
       <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={openSnackbarSuccess} autoHideDuration={4000} onClose={() => setOpenSnackbarSuccess(false)}>
         <Alert severity="success" sx={{ width: '100%' }}>
