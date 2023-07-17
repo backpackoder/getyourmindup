@@ -18,6 +18,7 @@ export const ROUTES = {
     SIGN_UP: (asPath: string) => `/auth/register?p=${asPath}`,
     LOG_IN: (asPath: string) => `/auth/login?p=${asPath}`,
     LOG_OUT: "/api/auth/signout",
+    SIGN_IN: "/api/auth/login",
   },
 
   DASHBOARD: {
