@@ -9,7 +9,7 @@ import { ARTICLES } from "@/utils/blogArticles";
 // Commons
 import { ROUTES } from "@/commons/commons";
 
-export default function Blog() {
+export function Blog() {
   return (
     <Box
       component={"article"}
