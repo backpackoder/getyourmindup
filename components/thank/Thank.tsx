@@ -60,7 +60,7 @@ export function Thank() {
       }
       <Box position={'absolute'} top={80} left={8}>
 
-      <Alert icon={<GradeIcon />} color="primary">
+      <Alert icon={<GradeIcon />}>
         <AlertTitle>A person in the world</AlertTitle>
         I thank you for the beautiful day today<strong></strong>
       </Alert>
