@@ -2,12 +2,13 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { useContext } from "react";
-import { Box, Drawer, List } from "@mui/material";
+import { Drawer, List } from "@mui/material";
 
 // Contexts
 import { AuthContext, UiContext } from "@/context";
 
 // Components
+import { MainMenu } from "./MainMenu";
 import { ListItemTemplate } from "./ListItemTemplate";
 
 // Utils
@@ -17,12 +18,12 @@ export const SideMenu = () => {
   const router = useRouter();
   const asPath = usePathname();
   const { user } = useContext(AuthContext);
-  const { toggleSideMenu, isMenuOpen } = useContext(UiContext);
+  const { toggleSideMenu, isMenuOpen, isDashboardMenuOpen } = useContext(UiContext);
 
-  const navigateTo = (url: string) => {
+  function navigateTo(url: string) {
     toggleSideMenu();
     router.push(url);
-  };
+  }
 
   return (
     <Drawer
@@ -31,60 +32,38 @@ export const SideMenu = () => {
       anchor="right"
       sx={{ backdropFilter: "blur(4px)", transition: "all 0.5s ease-out" }}
     >
-      <Box sx={{ width: 250, paddingTop: 5 }}>
-        <List>
-          {NAVBAR_ITEMS.APP.primary.map((route) => {
+      <List>
+        {!isDashboardMenuOpen && <MainMenu />}
+
+        {user &&
+          isDashboardMenuOpen &&
+          NAVBAR_ITEMS.DASHBOARD.logged.map((route) => {
             const isActive = asPath === route.path;
 
             return (
               <ListItemTemplate
                 key={route.path}
+                route={route}
+                isActive={isActive}
+                navigateTo={navigateTo}
+              />
+            );
+          })}
+
+        {!user &&
+          NAVBAR_ITEMS.DASHBOARD.notLogged.map((route) => {
+            const isActive = asPath === route.path(asPath);
+
+            return (
+              <ListItemTemplate
+                key={route.path(asPath)}
                 navigateTo={navigateTo}
                 route={route}
                 isActive={isActive}
               />
             );
           })}
-          {NAVBAR_ITEMS.APP.secondary.map((route) => {
-            const isActive = asPath === route.path;
-
-            return (
-              <ListItemTemplate
-                key={route.path}
-                navigateTo={navigateTo}
-                route={route}
-                isActive={isActive}
-              />
-            );
-          })}
-
-          {user
-            ? NAVBAR_ITEMS.APP.logged.map((route) => {
-                const isActive = asPath === route.path;
-
-                return (
-                  <ListItemTemplate
-                    key={route.path}
-                    navigateTo={navigateTo}
-                    route={route}
-                    isActive={isActive}
-                  />
-                );
-              })
-            : NAVBAR_ITEMS.APP.notLogged.map((route) => {
-                const isActive = asPath === route.path(asPath);
-
-                return (
-                  <ListItemTemplate
-                    key={route.path(asPath)}
-                    navigateTo={navigateTo}
-                    route={route}
-                    isActive={isActive}
-                  />
-                );
-              })}
-        </List>
-      </Box>
+      </List>
     </Drawer>
   );
 };

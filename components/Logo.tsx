@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import LOGO from "@/assets/logo/logo.png";
+import LOGO from "@/assets/imgs/logo/logo.png";
 
 type LogoProps = {
   m?: string;
