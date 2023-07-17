@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { db } from "@/db";
-import { IPublication } from '@/interfaces';
 import Publication from '@/models/Publication';
 import { cookies } from 'next/headers';
 import { jwt } from '@/utils';
 import { User } from '@/models';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/utils/authOptions';
 
 export async function PUT(req: Request) {
   try {
@@ -15,31 +16,17 @@ export async function PUT(req: Request) {
       }, { status: 400 });
     }
 
-    const nextCookies = cookies();
-    const token = nextCookies.get('token')
-    let userId = await jwt.isValidToken(token?.value || '');
-    await db.connect();
-    const user = await User.findById(userId).lean();
+    const session = await getServerSession(authOptions);
 
-    if (!user) {
-      await db.disconnect();
+    if (!session?.user) {
       return NextResponse
         .json({ message: "you must be authenticated to do this" }, { status: 401 });
     }
 
+
     const id = req.url.split('/').reverse()[0]
-
-    const publication = await Publication.findOneAndUpdate({ _id: id, user: userId }, { body }).lean();
-    if (!publication) {
-      await db.disconnect();
-      return NextResponse
-        .json({ message: "you can only update your posts" }, { status: 401 });
-    }
-
-
-
-
-    // const publication = await Publication.findByIdAndUpdate(id, { body }).lean();
+    await db.connect();
+    const publication = await Publication.findOneAndUpdate({ _id: id, user: (session?.user as any)._id }, { body }).lean();
     await db.disconnect();
 
     if (!publication) {
@@ -47,6 +34,7 @@ export async function PUT(req: Request) {
         message: "Not exists publication",
       }, { status: 400 });
     }
+
     return NextResponse.json({
       ...publication,
       body
@@ -54,8 +42,37 @@ export async function PUT(req: Request) {
   } catch (error) {
     console.log(error);
     return NextResponse.json({
-      message: "Revisar logs del servidor",
+      message: "Review server logs",
     }, { status: 500 });
   }
 };
 
+
+export async function DELETE(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse
+        .json({ message: "you must be authenticated to do this" }, { status: 401 });
+    }
+    const id = req.url.split('/').reverse()[0]
+    await db.connect();
+    const publication = await Publication.findOneAndDelete({ _id: id, user: (session?.user as any)._id }).lean();
+
+    await db.disconnect();
+    if (!publication) {
+      return NextResponse.json({
+        message: "Not exists publication",
+      }, { status: 400 });
+    }
+
+    return NextResponse.json({
+      message: 'Deleted correctly'
+    });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({
+      message: "Review server logs",
+    }, { status: 500 });
+  }
+};

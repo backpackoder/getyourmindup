@@ -36,8 +36,8 @@ export const oAuthToDbUser = async (oAuthEmail: string, oAuthName: string) => {
     const user = await User.findOne({ email: oAuthEmail });
     if (user) {
       await db.disconnect();
-      const { _id, name, email, role } = user;
-      return { _id, name, email, role };
+      const { _id, name, email, role, level } = user;
+      return { _id, name, email, role, level };
     }
 
     const newUser = new User({
@@ -48,8 +48,8 @@ export const oAuthToDbUser = async (oAuthEmail: string, oAuthName: string) => {
     });
     await newUser.save();
     await db.disconnect();
-    const { _id, name, email, role } = newUser;
-    return { _id, name, email, role };
+    const { _id, name, email, role, level } = newUser;
+    return { _id, name, email, role, level };
   } catch (error) {
     await db.disconnect();
     console.log(error);
