@@ -2,8 +2,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useWebSocket } from 'next-ws/client';
-import { Alert, AlertTitle, Box, Button, Chip, TextField, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Chip, Grid, TextField, Typography } from "@mui/material";
 import { getYourMindUpApi } from "@/api";
+import { SendOutlined } from "@mui/icons-material";
+import GradeIcon from '@mui/icons-material/Grade';
 
 export function Thank() {
   const ws = useWebSocket();
@@ -56,6 +58,13 @@ export function Thank() {
 
         ))
       }
+      <Box position={'absolute'} top={80} left={8}>
+
+      <Alert icon={<GradeIcon />} color="primary">
+        <AlertTitle>A person in the world</AlertTitle>
+        I thank you for the beautiful day today<strong></strong>
+      </Alert>
+      </Box>
       <Typography variant="h3" component="h2">
         Thank for something
       </Typography>
@@ -65,23 +74,29 @@ export function Thank() {
         for.
       </Typography>
       <form onSubmit={handleSubmit(onCreatePublication)} noValidate>
+        <Grid container spacing={2} alignContent={'center'} justifyContent={'center'}>
+          <Grid item xs={12} >
 
-        <TextField
-          id="outlined-multiline-static"
-          label="Give a thank"
-          multiline
-          minRows={4}
-          className="w-full"
-          {...register("body", {
-            required: "Este campo es requerido",
-          })}
-          error={!!errors.body}
-          helperText={errors.body?.message}
-        />
+            <TextField
+              id="outlined-multiline-static"
+              label="Give a thank"
+              multiline
+              minRows={4}
+              className="w-full"
+              {...register("body", {
+                required: "Este campo es requerido",
+              })}
+              error={!!errors.body}
+              helperText={errors.body?.message}
+            />
+          </Grid>
 
-        <Button variant="contained" type="submit">
-          I wanna thank for that today
-        </Button>
+          <Grid item xs={12} textAlign={'center'} >
+            <Button variant="contained" type="submit" endIcon={<SendOutlined sx={{ transform: 'rotate(-25deg)' }} />}>
+              I wanna thank for that today
+            </Button>
+          </Grid>
+        </Grid>
       </form>
     </Box>
   );

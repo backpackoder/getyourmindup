@@ -29,7 +29,7 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: '2196f3',
+          backgroundColor: '#bbdefb',
           height: 60
         },
       }
@@ -54,12 +54,12 @@ export const lightTheme = createTheme({
 
 
     MuiButton: {
-      defaultProps: {
-        variant: 'outlined',
-        size: 'small',
-        disableElevation: false,
-        color: 'info',
-      },
+      // defaultProps: {
+      //   variant: 'outlined',
+      //   size: 'small',
+      //   disableElevation: false,
+      //   color: 'info',
+      // },
       styleOverrides: {
         root: {
           textTransform: 'none',

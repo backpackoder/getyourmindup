@@ -18,11 +18,11 @@ export function NavbarMain() {
   const asPath = usePathname();
 
   return (
-    <AppBar>
+    <AppBar elevation={1}>
       <Toolbar>
         <Logo width={35} height={35} />
 
-        <Separator />
+        <Box flex={1} />
 
         <List
           sx={{
@@ -36,21 +36,11 @@ export function NavbarMain() {
           })}
         </List>
 
-        <Separator />
+        <Box flex={1} />
 
         <Buttons />
       </Toolbar>
     </AppBar>
-  );
-}
-
-function Separator() {
-  return (
-    <>
-      <Box flex={1} />
-      <Box sx={{ display: { xs: "none", sm: "block" } }} className="fadeIn"></Box>
-      <Box flex={1} />
-    </>
   );
 }
 
