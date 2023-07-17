@@ -1,6 +1,6 @@
 "use client"
 import { createTheme } from '@mui/material/styles';
-import { red,  } from '@mui/material/colors';
+import { blue, red,  } from '@mui/material/colors';
 
 
 export const lightTheme = createTheme({
@@ -29,7 +29,7 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: '2196f3',
+          backgroundColor: blue[300],
           height: 60
         },
       }
@@ -54,12 +54,12 @@ export const lightTheme = createTheme({
 
 
     MuiButton: {
-      defaultProps: {
-        variant: 'outlined',
-        size: 'small',
-        disableElevation: false,
-        color: 'info',
-      },
+      // defaultProps: {
+      //   variant: 'outlined',
+      //   size: 'small',
+      //   disableElevation: false,
+      //   color: 'info',
+      // },
       styleOverrides: {
         root: {
           textTransform: 'none',

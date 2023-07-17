@@ -5,6 +5,8 @@ import { jwt } from "@/utils";
 import { IPublication } from '@/interfaces';
 import { cookies } from 'next/headers';
 import Publication from '@/models/Publication';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/utils/authOptions';
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,31 +15,27 @@ export async function POST(req: NextRequest) {
       isPrivate = true,
       type = "gratitude"
     } = await req.json() as IPublication
-    
+
     if (body.length < 6) {
       return NextResponse.json({
         message: "Content must be longer than 6 characters",
       }, { status: 400 });
     }
-    const nextCookies = cookies();
-    const token = nextCookies.get('token')
-    let userId = await jwt.isValidToken(token?.value || '');
-    await db.connect();
-    const user = await User.findById(userId).lean();
-    
-    if (!user) {
-      await db.disconnect();
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
       return NextResponse
-      .json({ message: "you must be authenticated to do this" }, { status: 401 });
+        .json({ message: "you must be authenticated to do this" }, { status: 401 });
     }
 
     const newPublication = new Publication({
       body,
       type,
       isPrivate,
-      user: userId,
+      user: (session.user as any)._id,
     })
-    
+
+    await db.connect();
     await newPublication.save({ validateBeforeSave: true })
     await db.disconnect();
 
@@ -47,7 +45,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.log(error);
     return NextResponse.json({
-      message: "Revisar logs del servidor",
+      message: "Review server logs",
     }, { status: 500 });
   }
 };
@@ -64,7 +62,7 @@ export async function GET() {
   } catch (error) {
     console.log(error);
     return NextResponse.json({
-      message: "Revisar logs del servidor",
+      message: "Review server logs",
     }, { status: 500 });
   }
 }
