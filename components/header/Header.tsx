@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { AppBar, List, Toolbar } from "@mui/material";
+import { AppBar, Box, List, Toolbar } from "@mui/material";
 
 // Components
 import { Logo } from "../Logo";
@@ -43,33 +43,4 @@ export function NavbarMain() {
   );
 }
 
-function Buttons() {
-  const asPath = usePathname();
-  const router = useRouter();
-  const { user } = useContext(AuthContext);
-  const { toggleSideMenu } = useContext(UiContext);
-
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 2,
-      }}
-      className="fadeIn"
-    >
-      <Button onClick={() => toggleSideMenu()}>Menu</Button>
-
-      {!user &&
-        NAVBAR_ITEMS.APP.notLogged.map((route) => {
-          return (
-            <Button key={route.path(asPath)} onClick={() => router.push(route.path(asPath))}>
-              {route.icon} {route.label}
-            </Button>
-          );
-        })}
-    </Box>
-  );
-}
 
