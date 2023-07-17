@@ -1,7 +1,15 @@
+import Image from "next/image";
 import { Box, Typography } from "@mui/material";
+
 // import Carousel from "react-material-ui-carousel";
 
-export default function Blog() {
+// Utils
+import { ARTICLES } from "@/utils/blogArticles";
+
+// Commons
+import { ROUTES } from "@/commons/commons";
+
+export function Blog() {
   return (
     <Box
       component={"article"}
@@ -21,6 +29,40 @@ export default function Blog() {
       <Typography variant="h3" component="h2">
         Read some articles
       </Typography>
+
+      {ARTICLES.map((article) => (
+        <Box
+          key={article.title}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 2,
+            bgcolor: "lightgreen",
+            padding: 2,
+            borderRadius: "8px",
+          }}
+        >
+          <Typography
+            component="a"
+            variant="h5"
+            href={ROUTES.BLOG.ARTICLE(article.title)}
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            {article.title}
+          </Typography>
+
+          <Image
+            src={article.image}
+            alt={article.title}
+            width={300}
+            height={0}
+            className="rounded-[8px]"
+          />
+        </Box>
+      ))}
     </Box>
   );
 }

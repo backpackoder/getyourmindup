@@ -1,5 +1,11 @@
+"use client";
+
 import { usePathname, useRouter } from "next/navigation";
+import { useContext } from "react";
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
+
+// Contexts
+import { UiContext } from "@/context";
 
 type ListItemTemplateProps = {
   navigateTo?: (url: string) => void;
@@ -11,6 +17,33 @@ export function ListItemTemplate({ navigateTo, route, isActive }: ListItemTempla
   const asPath = usePathname();
   const router = useRouter();
 
+  const { toggleMenu, toggleDashboardMenu } = useContext(UiContext);
+
+  function handleMenus(menu: string) {
+    switch (menu) {
+      case "dashboard":
+        toggleDashboardMenu();
+        break;
+
+      default:
+        toggleMenu();
+        break;
+    }
+  }
+
+  function handleNavigate() {
+    route.handleMenu
+      ? handleMenus(route.handleMenu)
+      : route.path &&
+        (navigateTo
+          ? navigateTo(
+              route.label === "Sign in" || route.label === "Sign up"
+                ? route.path(asPath)
+                : route.path
+            )
+          : router.push(route.path));
+  }
+
   return (
     <ListItem
       sx={{
@@ -20,15 +53,7 @@ export function ListItemTemplate({ navigateTo, route, isActive }: ListItemTempla
           backgroundColor: "primary.light",
         },
       }}
-      onClick={() =>
-        navigateTo
-          ? navigateTo(
-              route.label === "Sign in" || route.label === "Sign up"
-                ? route.path(asPath)
-                : route.path
-            )
-          : router.push(route.path)
-      }
+      onClick={() => handleNavigate()}
     >
       <ListItemIcon>{route.icon}</ListItemIcon>
       <ListItemText
