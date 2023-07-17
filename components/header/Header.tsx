@@ -27,6 +27,7 @@ export function NavbarMain() {
         <List
           sx={{
             display: { xs: "none", md: "flex" },
+            height: 74,
           }}
         >
           {NAVBAR_ITEMS.APP.primary.map((route) => {
