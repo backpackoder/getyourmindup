@@ -4,7 +4,7 @@ import { Thank } from "@/components/thank/Thank";
 import { Psychologist } from "@/components/psychologist/Psychologist";
 import { Blog } from "@/components/blog/Blog";
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <GoodActionOfTheDay />

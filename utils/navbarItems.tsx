@@ -1,7 +1,6 @@
 import {
   FavoriteBorder,
   BookRounded,
-  Home,
   LocalLibrary,
   SelfImprovement,
   Diversity1,
@@ -21,7 +20,6 @@ const {
   BLOG,
   DASHBOARD,
   GOOD_ACTION_OF_THE_DAY,
-  HOME,
   RELAX_YOUR_MIND,
   THANK_FOR_SOMETHING,
 } = ROUTES;
@@ -29,7 +27,6 @@ const {
 export const NAVBAR_ITEMS = {
   APP: {
     primary: [
-      // { icon: <Home />, label: "Home", path: HOME },
       {
         icon: <VolunteerActivism />,
         label: "Good action of the day",

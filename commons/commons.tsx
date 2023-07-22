@@ -6,9 +6,30 @@ import DEFAULT_PROFILE_PICTURE from "@/assets/imgs/default-profile-picture.png";
 
 export const ROUTES = {
   HOME: "/",
+
   GOOD_ACTION_OF_THE_DAY: "/action",
   THANK_FOR_SOMETHING: "/thank",
   RELAX_YOUR_MIND: "/relax",
+
+  // MUSIC
+  RELAX_YOUR_MIND_MUSIC: "/relax/music",
+  RELAX_YOUR_MIND_MUSIC_PLAYLISTS: "/relax/music/playlists",
+  RELAX_YOUR_MIND_MUSIC_PLAYLISTS_PLAYLIST: (playlist: string) =>
+    `/relax/music/playlists/${playlist}`,
+  RELAX_YOUR_MIND_MUSIC_PLAYLISTS_PLAYLIST_TRACKS: (playlist: string) =>
+    `/relax/music/playlists/${playlist}/tracks`,
+  RELAX_YOUR_MIND_MUSIC_PLAYLISTS_CATEGORY: (category: string) =>
+    `/relax/music/playlists/category/${category}`,
+  // PODCASTS
+  RELAX_YOUR_MIND_PODCASTS: "/relax/podcasts",
+  RELAX_YOUR_MIND_PODCASTS_CHANNELS: "/relax/podcasts/channels",
+  RELAX_YOUR_MIND_PODCASTS_CHANNELS_CHANNEL: (channel: string) =>
+    `/relax/podcasts/channels/${channel}`,
+  RELAX_YOUR_MIND_PODCASTS_CHANNELS_CHANNEL_EPISODES: (channel: string) =>
+    `/relax/podcasts/channels/${channel}/episodes`,
+  RELAX_YOUR_MIND_PODCASTS_CHANNELS_THEME: (theme: string) =>
+    `/relax/podcasts/channels/theme/${theme}`,
+
   ABOUT: "/about",
   BLOG: {
     HOME: "/blog",
@@ -77,4 +98,92 @@ export const OWNERS = {
 export const IMAGES = {
   LOGO,
   DEFAULT_PROFILE_PICTURE,
+};
+
+export const CLIENT_SIDE_URLS = {
+  BASE: "http://localhost:3000",
+  // BASE: "https://getyourmindup.vercel.app/",
+  SPOTIFY_API: {
+    TRACKS: (playlist: string) => `/api/spotify/playlists/tracks/${playlist}`,
+  },
+};
+
+export const SPOTIFY_API = {
+  AUTH: {
+    CLIENT_ID: process.env.spotify_client_id,
+    CLIENT_SECRET: process.env.spotify_client_secret,
+  },
+
+  URLS: {
+    BASE: "https://api.spotify.com/v1",
+    AUTH: "https://accounts.spotify.com/api/token",
+  },
+
+  ENDPOINTS: {
+    MUSIC: {
+      CATEGORYS: "/browse/categories",
+      CATEGORYS_PLAYLISTS: (playlist_id: string) => `/browse/categories/${playlist_id}/playlists`,
+      PLAYLIST_COVER_IMAGE: (playlist_id: string) => `/playlists/${playlist_id}/images`,
+      PLAYLIST: (playlist_id: string) => `/playlists/${playlist_id}`,
+      PLAYLIST_ITEMS: (playlist_id: string) => `/playlists/${playlist_id}/tracks`,
+    },
+    PODCASTS: {
+      SHOW: (show_id: string) => `/shows/${show_id}`,
+      SHOW_EPISODES: (show_id: string) => `/shows/${show_id}/episodes`,
+    },
+    SEARCH: { SEARCH_FOR_ITEM: "/search" },
+  },
+
+  GENRE_SEEDS: {
+    MUSIC: {
+      CHILL: {
+        title: "chill",
+        description: "Music that is calm and soothing.",
+      },
+      CLASSICAL: {
+        title: "classical",
+        description: "Music that follows the traditions of classical music.",
+      },
+      SLEEP: {
+        title: "sleep",
+        description: "Music that is good to sleep.",
+      },
+      AMBIENT: {
+        title: "ambient",
+        description:
+          "Music that emphasizes tone and atmosphere over traditional musical structure or rhythm.",
+      },
+      SOUL: {
+        title: "soul",
+        description: "Music that is soulful.",
+      },
+    },
+
+    PODCASTS: {
+      PERSONNAL_DEVELOPMENT: {
+        title: "personnal development",
+        description: "Improve your life and develop your skills.",
+      },
+      MOTIVATION: {
+        title: "motivation",
+        description: "Motivate yourself to achieve your goals.",
+      },
+      SLEEP: {
+        title: "sleep",
+        description: "Don't have trouble sleeping anymore.",
+      },
+      THERAPY: {
+        title: "therapy",
+        description: "Therapy to help you.",
+      },
+      MEDITATION: {
+        title: "meditation",
+        description: "Meditate to relax your mind.",
+      },
+      ASMR: {
+        title: "ASMR",
+        description: "ASMR to relax your mind.",
+      },
+    },
+  },
 };
