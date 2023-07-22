@@ -13,7 +13,7 @@ export async function GET(request: Request, { params }: { params: { playlist: st
   const res =
     TOKEN &&
     (await fetch(
-      `${SPOTIFY_API.URLS.BASE}${SPOTIFY_API.ENDPOINTS.PLAYLIST_ITEMS(params.playlist)}`,
+      `${SPOTIFY_API.URLS.BASE}${SPOTIFY_API.ENDPOINTS.MUSIC.PLAYLIST_ITEMS(params.playlist)}`,
       {
         headers: {
           Authorization: `Bearer ${TOKEN}`,
