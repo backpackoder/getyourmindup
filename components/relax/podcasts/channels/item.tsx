@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ROUTES } from "@/commons/commons";
 
 // Types
-import { GetPodcast } from "@/utils/spotify/podcasts/getThemesPlaylists/types";
+import { GetPodcast } from "@/utils/spotify/podcasts/getPodcastsThemes/types";
 
 type ItemProps = {
   playlist: GetPodcast;
