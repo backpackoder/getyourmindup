@@ -5,8 +5,9 @@ import { redirect, useRouter } from "next/navigation";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { useForm } from "react-hook-form";
-import { Box, Grid, Typography, TextField, Button, Chip, MenuItem, FormControl } from "@mui/material";
+import { Box, Grid, Typography, TextField, Button, Chip, MenuItem, FormControl, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AuthLayout } from "@/components/layouts/authLayout";
 import { validations } from "@/utils";
 import { AuthContext } from "@/context";
@@ -61,7 +62,7 @@ const RegisterPage = ({ searchParams,
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h1" component="h1">
-                Crear cuenta
+                Account registration
               </Typography>
               <Chip
                 label="This user already exists"
@@ -148,71 +149,93 @@ const RegisterPage = ({ searchParams,
                 </TextField>
               </FormControl>
             </Grid>
-            <Grid item xs={12} >
-              <TextField
-                label="Profession"
-                {...register("profession")}
-                error={!!errors.profession}
-                helperText={errors.profession?.message}
-                variant="filled"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <TextField
-                  select
-                  variant="filled"
-                  label="I live with"
-                  defaultValue={''}
-                  {...register("liveWith")}
-                  error={!!errors.liveWith}
-                  helperText={errors.liveWith?.message}
+            <Grid item xs={12}>
+              <Accordion>
+                <AccordionSummary
+                  sx={{ backgroundColor: "rgba(0, 0, 0, 0.06)" }}
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
                 >
-                  <MenuItem value="family">
-                    Family
-                  </MenuItem>
-                  <MenuItem value="friends">
-                    Friends
-                  </MenuItem>
-                  <MenuItem value="spouse">
-                    Spouse
-                  </MenuItem>
-                  <MenuItem value="alone">
-                    Alone
-                  </MenuItem>
-                </TextField>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <TextField
-                  select
-                  variant="filled"
-                  label="Do you have a pet"
-                  defaultValue={0}
-                  {...register("hasPet")}
-                  error={!!errors.hasPet}
-                  helperText={errors.hasPet?.message}
-                >
-                  <MenuItem value={1}>
-                    Yes
-                  </MenuItem>
-                  <MenuItem value={0}>
-                    No
-                  </MenuItem>
-                </TextField>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} >
-              <TextField
-                label="My hobbies are"
-                {...register("passions")}
-                error={!!errors.passions}
-                helperText={errors.passions?.message}
-                variant="filled"
-                fullWidth
-              />
+                  <Typography>Optional fields</Typography>
+                </AccordionSummary>
+                <AccordionDetails sx={{ padding: 0 }}>
+                  <Grid container spacing={1}>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Profession"
+                        {...register("profession")}
+                        error={!!errors.profession}
+                        helperText={errors.profession?.message}
+                        variant="filled"
+                        fullWidth
+                      />
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <TextField
+                          select
+                          variant="filled"
+                          label="I live with"
+                          defaultValue={''}
+                          {...register("liveWith")}
+                          error={!!errors.liveWith}
+                          helperText={errors.liveWith?.message}
+                        >
+                          <MenuItem value="family">
+                            Family
+                          </MenuItem>
+                          <MenuItem value="friends">
+                            Friends
+                          </MenuItem>
+                          <MenuItem value="spouse">
+                            Spouse
+                          </MenuItem>
+                          <MenuItem value="alone">
+                            Alone
+                          </MenuItem>
+                        </TextField>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl fullWidth>
+                        <TextField
+                          select
+                          variant="filled"
+                          label="Do you have a pet"
+                          defaultValue={0}
+                          {...register("hasPet")}
+                          error={!!errors.hasPet}
+                          helperText={errors.hasPet?.message}
+                        >
+                          <MenuItem value={1}>
+                            Yes
+                          </MenuItem>
+                          <MenuItem value={0}>
+                            No
+                          </MenuItem>
+                        </TextField>
+                      </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12} >
+                      <TextField
+                        label="My hobbies are"
+                        {...register("passions")}
+                        error={!!errors.passions}
+                        helperText={errors.passions?.message}
+                        variant="filled"
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+
+
             </Grid>
             <Grid item xs={12}>
               <Button
@@ -222,7 +245,7 @@ const RegisterPage = ({ searchParams,
                 fullWidth
                 type="submit"
               >
-                Registrarse
+                Create Account
               </Button>
             </Grid>
             <Grid item xs={12} display="flex" justifyContent="end" mt={1}>
@@ -230,7 +253,7 @@ const RegisterPage = ({ searchParams,
                 href={`/auth/login?p=${searchParams?.p?.toString() || "/"}`}
                 style={{ textDecoration: "underline" }}
               >
-                ¿Ya tienes cuenta?
+                Already have an account?
               </Link>
             </Grid>
           </Grid>

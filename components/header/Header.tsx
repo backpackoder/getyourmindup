@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { AppBar, List, Toolbar } from "@mui/material";
+import { AppBar, Box, List, Toolbar } from "@mui/material";
 
 // Components
 import { Logo } from "../Logo";
@@ -16,15 +16,16 @@ export function NavbarMain() {
   const asPath = usePathname();
 
   return (
-    <AppBar>
+    <AppBar elevation={1}>
       <Toolbar>
         <Logo width={35} height={35} />
 
-        <Separator />
+        <Box flex={1} />
 
         <List
           sx={{
             display: { xs: "none", md: "flex" },
+            height: 74,
           }}
         >
           {NAVBAR_ITEMS.APP.primary.map((route) => {
@@ -34,10 +35,12 @@ export function NavbarMain() {
           })}
         </List>
 
-        <Separator />
+        <Box flex={1} />
 
         <Buttons />
       </Toolbar>
     </AppBar>
   );
 }
+
+

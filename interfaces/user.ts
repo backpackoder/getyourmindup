@@ -6,6 +6,7 @@ export interface IUser {
   age: string;
   profession: string;
   liveWith: string;
+  level: number;
   passions: string;
   hasPet: boolean;
   password?: string;

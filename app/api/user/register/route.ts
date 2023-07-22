@@ -30,19 +30,19 @@ export async function POST(req: Request) {
     } = await req.json() as IUser
     if (password.length < 6) {
       return NextResponse.json({
-        message: "La contraseña debe tener 6 o más caracteres",
+        message: "Password must be 6 or more characters",
       }, { status: 400 });
     }
 
     if (name.length < 2) {
       return NextResponse.json({
-        message: "El nombre 2 o más caracteres",
+        message: "The name 2 or more characters",
       }, { status: 400 });
     }
 
     if (!validations.isValidEmail(email)) {
       return NextResponse.json({
-        message: "El correo no tiene formato de correo",
+        message: "The mail does not have mail format",
       }, { status: 400 });
     }
 
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     if (user) {
       await db.disconnect();
       return NextResponse.json({
-        message: "Ese correo ya está registrado",
+        message: "That email is already registered",
       }, { status: 400 });
     }
 
@@ -84,7 +84,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.log(error);
     return NextResponse.json({
-      message: "Revisar logs del servidor",
+      message: "Review server logs",
     }, { status: 500 });
   }
 };

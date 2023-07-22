@@ -7,6 +7,7 @@ const userSchema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     age: { type: Number, required: true },
+    level: { type: Number, required: true, default: 1 },
     sex: {
       type: String, enum: {
         values: ["male", "famale"],
@@ -24,8 +25,8 @@ const userSchema = new Schema(
         message: "{VALUE} not a valid character",
       }
     },
-    passions: { type: String},
-    hasPet: { type: Boolean, default: false},
+    passions: { type: String },
+    hasPet: { type: Boolean, default: false },
     role: {
       type: String,
       enum: {

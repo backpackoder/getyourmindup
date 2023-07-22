@@ -1,3 +1,7 @@
-export default function Thank() {
-  return <div>Thank page</div>;
+import { Thank } from "@/components/thank/Thank";
+
+
+
+export default function ThankPage() {
+  return <Thank />;
 }

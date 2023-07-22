@@ -4,25 +4,6 @@ import { db } from "@/db";
 import { User } from "@/models";
 import { jwt } from "@/utils";
 
-type Data =
-  | {
-    message: string;
-  }
-  | {
-    error: string;
-  }
-  | {
-    message: string;
-  }
-  | {
-    token: string;
-    user: {
-      email: string;
-      role: string;
-      name: string;
-    };
-  };
-
 export async function POST(req: Request) {
   try {
     const { email = "", password = "" } = await req.json();
@@ -32,13 +13,13 @@ export async function POST(req: Request) {
 
     if (!user) {
       return NextResponse.json({
-        message: "Correo o contraseña no válidos - EMAIL",
+        message: "Invalid email or password - EMAIL",
       }, { status: 400 });
     }
 
     if (!bcrypt.compareSync(password, user.password!)) {
       return NextResponse.json({
-        message: "Correo o contraseña no válidos - PASSWORD",
+        message: "Invalid email or password - PASSWORD",
       }, { status: 400 });
     }
     const { role, name, _id } = user;
@@ -56,7 +37,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.log(error);
     return NextResponse.json({
-      error: "Error en el servidor",
+      error: "Review server logs",
     }, { status: 500 });
   }
 };
