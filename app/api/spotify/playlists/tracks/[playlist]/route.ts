@@ -8,7 +8,7 @@ import { PlaylistItems } from "@/utils/spotify/music/getPlaylistItems/types";
 
 export async function GET(request: Request, { params }: { params: { playlist: string } }) {
   const TOKEN =
-    "BQDvrDC2AwgQkbeVqdnePKeJFtL7aWcXuIv-JNHj5gFA2QKTmQoIGsD4CMnSPm1TgKZ3p23ikzkEs14o-4W-TdE0W6kOyupFk4CaOuIEfCiAXsRTf7Y";
+    "BQC6FyoAmaaujnztTD2tcbSd9jhM07os5iuwNBA0OPPgQ_4fOKQvqelsBk1HysNjmNPxCihIATlGKUqK4-i5Husl6MLajZdJYHvCgBgzi2IOSi33t4c";
 
   const res =
     TOKEN &&

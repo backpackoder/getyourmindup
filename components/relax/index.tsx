@@ -1,30 +1,13 @@
 // Components
-import { MusicPlaylists } from "./music/playlists";
-import { PodcastsThemes } from "./podcasts/channels";
+import { RelaxItemMusic, RelaxItemPodcasts } from "./components/RelaxItems";
 
-export async function Relax() {
+export function Relax() {
   return (
     <article className="flex flex-col justify-center gap-8">
       <h2 className="text-4xl font-medium">Relax your mind</h2>
 
-      {/* CREAR UN ACCORDEON !!! */}
-
-      <RelaxItem name="Music">
-        <MusicPlaylists />
-      </RelaxItem>
-
-      <RelaxItem name="Podcasts">
-        <PodcastsThemes />
-      </RelaxItem>
+      <RelaxItemMusic />
+      <RelaxItemPodcasts />
     </article>
   );
-}
-
-type RelaxItemProps = {
-  name: string;
-  children: JSX.Element;
-};
-
-export function RelaxItem({ children }: RelaxItemProps) {
-  return <section className="border-4">{children}</section>;
 }

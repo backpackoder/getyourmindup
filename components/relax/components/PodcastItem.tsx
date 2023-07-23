@@ -15,7 +15,10 @@ export async function PodcastItem({ item }: PodcastItemProps) {
   return (
     <>
       <div className="group relative">
-        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden max-w-[300px] max-h-full text-white overflow-hidden z-10 pointer-events-none group-hover:block">
+        <p
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden max-w-[300px] max-h-full
+        text-white text-center font-medium p-2 overflow-hidden z-10 pointer-events-none group-hover:block"
+        >
           {item.description}
         </p>
 

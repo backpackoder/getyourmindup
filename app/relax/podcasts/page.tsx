@@ -1,6 +1,6 @@
 // Components
-import { PodcastsThemes } from "@/components/relax/podcasts/channels";
+import { RelaxItemPodcasts } from "@/components/relax/components/RelaxItems";
 
 export default async function Podcasts() {
-  return <PodcastsThemes />;
+  return <RelaxItemPodcasts />;
 }

@@ -1,6 +1,6 @@
 // Components
-import { MusicPlaylists } from "@/components/relax/music/playlists";
+import { RelaxItemMusic } from "@/components/relax/components/RelaxItems";
 
 export default async function Music() {
-  return <MusicPlaylists />;
+  return <RelaxItemMusic />;
 }
