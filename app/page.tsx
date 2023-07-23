@@ -2,7 +2,7 @@
 import { GoodActionOfTheDay } from "@/components/goodActionOfTheDay/GoodActionOfTheDay";
 import { Thank } from "@/components/thank/Thank";
 import { Psychologist } from "@/components/psychologist/Psychologist";
-import { Blog } from "@/components/blog/Blog";
+import { BlogList } from "@/components/blog/BlogList";
 
 export default async function Home() {
   return (
@@ -10,7 +10,7 @@ export default async function Home() {
       <GoodActionOfTheDay />
       <Thank />
       <Psychologist />
-      <Blog />
+      <BlogList />
     </>
   );
 }
