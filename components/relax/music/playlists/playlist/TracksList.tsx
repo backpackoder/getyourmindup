@@ -29,6 +29,8 @@ export function TracksList({ playlist }: TracksListProps) {
     fetchTracks();
   }, [playlist]);
 
+  console.log("tracks", tracks);
+
   return tracks ? (
     <section className="flex flex-col items-center justify-center gap-8">
       <div className="flex flex-wrap items-center gap-4">

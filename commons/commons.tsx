@@ -139,15 +139,17 @@ export const SPOTIFY_API = {
     MUSIC: {
       CHILL: {
         title: "chill",
-        description: "Music that is calm and soothing.",
+        description: "Music that is calm and soothing. Great for relaxing or working.",
       },
       CLASSICAL: {
         title: "classical",
-        description: "Music that follows the traditions of classical music.",
+        description:
+          "Music that is rooted in the traditions of Western liturgical and secular music.",
       },
       SLEEP: {
         title: "sleep",
-        description: "Music that is good to sleep.",
+        description:
+          "Sleeping is important, so here's some music to help you sleep or just have a great nap.",
       },
       AMBIENT: {
         title: "ambient",
@@ -156,7 +158,7 @@ export const SPOTIFY_API = {
       },
       SOUL: {
         title: "soul",
-        description: "Music that is soulful.",
+        description: "Music that is soulful, usually featuring vocals and a strong rhythm.",
       },
     },
 
@@ -169,21 +171,21 @@ export const SPOTIFY_API = {
         title: "motivation",
         description: "Motivate yourself to achieve your goals.",
       },
+      THERAPY: {
+        title: "therapy",
+        description: "Listen therapy podcasts to feel better.",
+      },
       SLEEP: {
         title: "sleep",
         description: "Don't have trouble sleeping anymore.",
       },
-      THERAPY: {
-        title: "therapy",
-        description: "Therapy to help you.",
-      },
       MEDITATION: {
         title: "meditation",
-        description: "Meditate to relax your mind.",
+        description: "Learn how to meditate and relax your mind.",
       },
       ASMR: {
         title: "ASMR",
-        description: "ASMR to relax your mind.",
+        description: "Listen ASMR podcasts to relax your mind.",
       },
     },
   },

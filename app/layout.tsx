@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <NavbarMain />
                 </nav>
                 <SideMenu />
-                <main className="flex flex-col items-center gap-4 min-h-screen p-24">
+                <main className="flex flex-col items-center gap-4 min-h-screen p-4 pt-24">
                   {children}
                 </main>
                 <Footer />

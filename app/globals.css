@@ -1,5 +1,5 @@
-/* @tailwind base;
-@tailwind components; */
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
 :root {
@@ -17,7 +17,7 @@
 }
 
 body {
-  background-color: #e3f2fd; 
+  background-color: #e3f2fd;
   color: black;
 }
 
