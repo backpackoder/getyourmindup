@@ -2,7 +2,7 @@
 import PicOfThibaut from "@/assets/imgs/owners/Thibaut - Profile picture.jpg";
 import PicOfMiguel from "@/assets/imgs/owners/Miguel - Profile picture.jpg";
 import LOGO from "@/assets/imgs/logo/logo.png";
-import DEFAULT_PROFILE_PICTURE from "@/assets/imgs/default-profile-picture.png";
+import DEFAULT_PROFILE_IMAGE from "@/assets/imgs/default-profile-image.png";
 
 export const ROUTES = {
   HOME: "/",
@@ -30,13 +30,25 @@ export const ROUTES = {
   RELAX_YOUR_MIND_PODCASTS_CHANNELS_THEME: (theme: string) =>
     `/relax/podcasts/channels/theme/${theme}`,
 
-  ABOUT: "/about",
+  // Psychologists
+  PSYCHOLOGISTS: {
+    HOME: "/psychologists",
+    PSYCHOLOGIST: (name: string) => `/psychologists/${name}`,
+  },
+
+  // Blog
   BLOG: {
     HOME: "/blog",
     ARTICLE: (title: string) => `/blog/${title}`,
   },
+
+  // About
+  ABOUT: "/about",
+
+  // Users
   USERS: "/users",
 
+  // Auth
   AUTH: {
     SIGN_UP: (asPath: string) => `/auth/register?p=${asPath}`,
     LOG_IN: (asPath: string) => `/auth/login?p=${asPath}`,
@@ -44,6 +56,7 @@ export const ROUTES = {
     SIGN_IN: "/api/auth/login",
   },
 
+  // Dashboard
   DASHBOARD: {
     HOME: "/dashboard",
     MY_ACTIONS: "/dashboard/my-actions",
@@ -52,6 +65,7 @@ export const ROUTES = {
     SETTINGS: "/dashboard/settings",
   },
 
+  // API
   API: {
     // Users
     USERS: "/api/users",
@@ -98,7 +112,7 @@ export const OWNERS = {
 
 export const IMAGES = {
   LOGO,
-  DEFAULT_PROFILE_PICTURE,
+  DEFAULT_PROFILE_IMAGE,
 };
 
 export const CLIENT_SIDE_URLS = {
