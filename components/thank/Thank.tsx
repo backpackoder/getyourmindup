@@ -37,7 +37,9 @@ export function Thank() {
   const onCreatePublication = async ({ body, isPrivate }: FormData) => {
     try {
       const { data } = await getYourMindUpApi.post("/publications", { body, isPrivate });
-      ws?.send(JSON.stringify({ newThank: body }));
+      if (!isPrivate) {
+        ws?.send(body);
+      }
       setOpenSnackbarSuccess(true);
     } catch (error) {
       setOpenSnackbarError(true);
@@ -45,9 +47,8 @@ export function Thank() {
   };
 
   const onMessage = useCallback((event: MessageEvent) => {
-    const resp = JSON.parse(event.data);
-    if (!resp?.newThank) return;
-    const newThank = resp.newThank;
+    const resp = event.data.text();
+    const newThank = resp;
     setThanks((t) => [...t, newThank]);
   }, []);
 

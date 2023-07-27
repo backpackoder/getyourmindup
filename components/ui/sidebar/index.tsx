@@ -12,7 +12,7 @@ import { MainMenu } from "./MainMenu";
 import { ListItemTemplate } from "./ListItemTemplate";
 
 // Utils
-import { NAVBAR_ITEMS } from "@/utils/navbarItems";
+import { NAVBAR_ITEMS } from "@/components/header/components/navbarItems";
 
 export const SideMenu = () => {
   const router = useRouter();

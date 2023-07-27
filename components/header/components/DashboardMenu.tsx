@@ -31,7 +31,7 @@ export function DashboardMenu() {
         className="fadeIn"
       >
         <Image
-          src={IMAGES.DEFAULT_PROFILE_PICTURE}
+          src={IMAGES.DEFAULT_PROFILE_IMAGE}
           alt={`${user.name}'s profile picture`}
           width={20}
           height={20}

@@ -8,7 +8,7 @@ import { UiContext } from "@/context";
 import { ListItemTemplate } from "./ListItemTemplate";
 
 // Utils
-import { NAVBAR_ITEMS } from "@/utils/navbarItems";
+import { NAVBAR_ITEMS } from "@/components/header/components/navbarItems";
 
 export function MainMenu() {
   const asPath = usePathname();

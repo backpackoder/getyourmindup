@@ -8,8 +8,7 @@ import { Logo } from "../Logo";
 import { ListItemTemplate } from "../ui/sidebar/ListItemTemplate";
 
 // Utils
-import { NAVBAR_ITEMS } from "@/utils/navbarItems";
-import { Separator } from "./components/Separator";
+import { NAVBAR_ITEMS } from "@/components/header/components/navbarItems";
 import { Buttons } from "./components/Buttons";
 
 export function NavbarMain() {
@@ -38,6 +37,7 @@ export function NavbarMain() {
         <Box flex={1} />
 
         <Buttons />
+
       </Toolbar>
     </AppBar>
   );

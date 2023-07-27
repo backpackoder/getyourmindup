@@ -8,7 +8,7 @@ import { Box, Button } from "@mui/material";
 import { AuthContext, UiContext } from "@/context";
 
 // Utils
-import { NAVBAR_ITEMS } from "@/utils/navbarItems";
+import { NAVBAR_ITEMS } from "@/components/header/components/navbarItems";
 import { DashboardMenu } from "./DashboardMenu";
 
 export function Buttons() {
@@ -32,19 +32,19 @@ export function Buttons() {
       }}
       className="fadeIn"
     >
-      <Button onClick={() => handleMenu()}>Menu</Button>
 
       {user ? (
         <DashboardMenu />
       ) : (
         NAVBAR_ITEMS.DASHBOARD.notLogged.map((route) => {
           return (
-            <Button key={route.path(asPath)} onClick={() => router.push(route.path(asPath))}>
-              {route.icon} {route.label}
+            <Button variant={route.label === 'Sign in' ? 'outlined' : 'contained'} sx={{ color: 'white', border: 'none' }} key={route.path(asPath)} onClick={() => router.push(route.path(asPath))}>
+              {route.icon && <> {route.icon}&nbsp;</>} {route.label}
             </Button>
           );
         })
       )}
+      <Button onClick={() => handleMenu()}>Menu</Button>
     </Box>
   );
 }

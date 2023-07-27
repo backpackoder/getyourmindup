@@ -43,8 +43,8 @@ export const NAVBAR_ITEMS = {
   },
   DASHBOARD: {
     notLogged: [
-      { icon: <Login />, label: "Sign in", path: AUTH.LOG_IN },
-      { icon: <Login />, label: "Sign up", path: AUTH.SIGN_UP },
+      { icon: <Login /> , label: "Sign in", path: AUTH.LOG_IN },
+      { icon: null, label: "Sign up", path: AUTH.SIGN_UP },
     ],
     logged: [
       { icon: <ArrowBack />, label: "Main menu", path: null, handleMenu: "main" },
