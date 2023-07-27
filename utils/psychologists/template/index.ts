@@ -38,6 +38,11 @@ export const Psychologist_Template: PsychologistProfile = {
     saturday: false,
     sunday: false,
   },
-  timezone: "",
+  location: {
+    country: "",
+    city: "",
+    address: "",
+    timezone: "",
+  },
   calendar: "",
 };

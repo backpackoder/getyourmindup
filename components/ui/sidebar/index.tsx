@@ -12,7 +12,9 @@ import { MainMenu } from "./MainMenu";
 import { ListItemTemplate } from "./ListItemTemplate";
 
 // Utils
-import { NAVBAR_ITEMS } from "@/utils/navbarItems";
+import { NAVBAR_ITEMS } from "@/components/ui/navbar/constants/navbarItems";
+import { blue } from "@mui/material/colors";
+import { FolderShared } from "@mui/icons-material";
 
 export const SideMenu = () => {
   const router = useRouter();
@@ -30,9 +32,10 @@ export const SideMenu = () => {
       open={isMenuOpen}
       onClose={toggleSideMenu}
       anchor="right"
-      sx={{ backdropFilter: "blur(4px)", transition: "all 0.5s ease-out" }}
+      sx={{ backdropFilter: "blur(4px)", color: 'white', transition: "all 0.5s ease-out" }}
     >
-      <List>
+      <List sx={{ backgroundColor: blue[900], height: '100vh', color: 'white' }}>
+
         {!isDashboardMenuOpen && <MainMenu />}
 
         {user &&
@@ -50,19 +53,15 @@ export const SideMenu = () => {
             );
           })}
 
-        {!user &&
-          NAVBAR_ITEMS.DASHBOARD.notLogged.map((route) => {
-            const isActive = asPath === route.path(asPath);
-
-            return (
-              <ListItemTemplate
-                key={route.path(asPath)}
-                navigateTo={navigateTo}
-                route={route}
-                isActive={isActive}
-              />
-            );
-          })}
+        {
+          user && (
+            <ListItemTemplate
+              route={{ icon: <FolderShared />, label: "Dashboard", path: null, handleMenu: "dashboard" }}
+              isActive={false}
+              navigateTo={navigateTo}
+            />
+          )
+        }
       </List>
     </Drawer>
   );

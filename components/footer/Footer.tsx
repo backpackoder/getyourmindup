@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 // Components
-import { Logo } from "../Logo";
+import { Logo } from "../ui/Logo";
 
 // Commons
 import { ROUTES } from "@/commons/commons";

@@ -24,8 +24,8 @@ export async function RelaxRowItem({ name, item }: RelaxRowItemProps) {
 
           for (let i = 0; i < 4; i++) {
             images.push({
-              src: playlist.category.playlists.items[i].images[0].url,
-              alt: `${playlist.category.playlists.items[i].name}'s cover image`,
+              src: playlist.category.playlists?.items[i]?.images[0]?.url,
+              alt: `${playlist.category.playlists?.items[i]?.name}'s cover image`,
               width: 100,
               height: 100,
             });
@@ -51,8 +51,8 @@ export async function RelaxRowItem({ name, item }: RelaxRowItemProps) {
 
           for (let i = 0; i < 4; i++) {
             images.push({
-              src: podcast.theme.shows.items[i].images[0].url,
-              alt: `${podcast.theme.shows.items[i].name}'s cover image`,
+              src: podcast.theme.shows?.items[i]?.images[0]?.url,
+              alt: `${podcast.theme.shows?.items[i]?.name}'s cover image`,
               width: 100,
               height: 100,
             });

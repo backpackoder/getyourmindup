@@ -77,7 +77,7 @@ type PsychologistNotFoundProps = {
   name: string;
 };
 
-export function PsychologistNotFound({ name }: PsychologistNotFoundProps) {
+function PsychologistNotFound({ name }: PsychologistNotFoundProps) {
   return (
     <article>
       <Typography variant="h4" component="h2">

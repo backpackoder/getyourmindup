@@ -22,13 +22,11 @@ export const UiProvider: FC<Props> = ({ children }) => {
   const [openSnackbarSuccess, setOpenSnackbarSuccess] = useState<boolean>(false)
   const [openSnackbarError, setOpenSnackbarError] = useState<boolean>(false)
 
-
-  const toggleSideMenu = () => dispatch({ type: "[UI] - ToggleMenu" });
-  const toggleMenu = () => dispatch({ type: "[UI] - openMenu" });
-  const toggleDashboardMenu = () => dispatch({ type: "[UI] - openDashboardMenu" });
+  const toggleSideMenu = () => dispatch({ type: "[UI] - ToggleSideMenu" });
+  const toggleDashboardMenu = () => dispatch({ type: "[UI] - toggleDashboardMenu" });
 
   return (
-    <UiContext.Provider value={{ ...state, toggleSideMenu, setOpenSnackbarSuccess, setOpenSnackbarError, toggleMenu, toggleDashboardMenu }}>
+    <UiContext.Provider value={{ ...state, toggleSideMenu, setOpenSnackbarSuccess, setOpenSnackbarError, toggleDashboardMenu }}>
 
       <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={openSnackbarSuccess} autoHideDuration={4000} onClose={() => setOpenSnackbarSuccess(false)}>
         <Alert severity="success" sx={{ width: '100%' }}>
