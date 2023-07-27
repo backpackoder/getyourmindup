@@ -1,4 +1,3 @@
-"use client";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
   description: "Improve your mental health thanks to our tips and actions to take",
 };
 
-export default function RootLayout(props : { children: React.ReactNode }) {
+export default function RootLayout({children} : { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -32,7 +31,7 @@ export default function RootLayout(props : { children: React.ReactNode }) {
                 </nav>
                 <SideMenu />
                 <main className="flex flex-col items-center gap-4 min-h-screen p-4 pt-24">
-                  {props.children}
+                  {children}
                 </main>
                 <Footer />
               </ThemeProvider>
