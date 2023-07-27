@@ -18,7 +18,7 @@ import { SendOutlined } from "@mui/icons-material";
 import GradeIcon from "@mui/icons-material/Grade";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import { blue, purple, yellow } from "@mui/material/colors";
+import { teal, amber } from "@mui/material/colors";
 import { UiContext } from "@/context";
 
 type FormData = { body: string; isPrivate: boolean };
@@ -137,8 +137,8 @@ export function Thank() {
         {thanks?.map((thank) => (
           <Alert
             key={thank}
-            icon={<GradeIcon sx={{ color: yellow[400] }} />}
-            sx={{ borderRadius: "4% / 50%", backgroundColor: blue[100], color: "black", mb: 2 }}
+            icon={<GradeIcon sx={{ color: amber[800] }} />}
+            sx={{ borderRadius: "4% / 50%", backgroundColor: '#008072', color: "black", mb: 2 }}
             elevation={1}
           >
             <AlertTitle></AlertTitle>
@@ -146,22 +146,22 @@ export function Thank() {
           </Alert>
         ))}
         <Alert
-          icon={<GradeIcon sx={{ color: yellow[400] }} />}
-          sx={{ borderRadius: "4% / 50%", backgroundColor: blue[100], color: "black", mb: 2 }}
+          icon={<GradeIcon sx={{ color: amber[800] }} />}
+          sx={{ borderRadius: "4% / 50%", backgroundColor: '#008072', color: "black", mb: 2 }}
           elevation={1}
         >
           I thank you for the beautiful day today - <strong>A person in the world</strong>
         </Alert>
         <Alert
-          icon={<GradeIcon sx={{ color: yellow[400] }} />}
-          sx={{ borderRadius: "20px", backgroundColor: blue[100], color: "black", mb: 2 }}
+          icon={<GradeIcon sx={{ color: amber[800] }} />}
+          sx={{ borderRadius: "20px", backgroundColor: '#008072', color: "black", mb: 2 }}
           elevation={1}
         >
           I thank you for the beautiful day today - <strong>A person in the world</strong>
         </Alert>
         <Alert
-          icon={<GradeIcon sx={{ color: yellow[400] }} />}
-          sx={{ borderRadius: "20px", backgroundColor: blue[100], color: "black", mb: 2 }}
+          icon={<GradeIcon sx={{ color: amber[800] }} />}
+          sx={{ borderRadius: "20px", backgroundColor: '#008072', color: "black", mb: 2 }}
           elevation={1}
         >
           I thank you for the beautiful day today - <strong>A person in the world</strong>
