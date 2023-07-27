@@ -25,7 +25,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'pnpm'
+    - run: npm i -g pnpm
     - run: pnpm install
     - run: npx next-ws-cli patch
     - run: pnpm run build
