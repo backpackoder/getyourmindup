@@ -45,7 +45,7 @@ export function NavbarMain() {
                 cursor: "pointer",
                 ":hover": {
                   backgroundColor: blue['A700'],
-                  borderRadius: 0
+                  borderRadius: 2
                 },
               }} key={route.path} href={route.path} startIcon={route.icon} >{route.label}</Button>;
             })}

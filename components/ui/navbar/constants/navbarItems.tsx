@@ -31,18 +31,18 @@ export const NAVBAR_ITEMS = {
   ],
   APP: {
     primary: [
+      { icon: <Diversity1 />, label: "Thank for something", path: THANK_FOR_SOMETHING },
       {
         icon: <VolunteerActivism />,
         label: "Good action of the day",
         path: GOOD_ACTION_OF_THE_DAY,
       },
-      { icon: <Diversity1 />, label: "Thank for something", path: THANK_FOR_SOMETHING },
       { icon: <SelfImprovement />, label: "Relax your mind", path: RELAX_YOUR_MIND },
     ],
     secondary: [
       { icon: <LocalLibrary />, label: "Read", path: BLOG.HOME },
       { icon: <BookRounded />, label: "About us", path: ABOUT },
-      
+
     ],
   },
   DASHBOARD: {

@@ -23,22 +23,22 @@ export const authOptions: NextAuthOptions = {
       name: "Custom Login",
       credentials: {
         email: {
-          label: "Correo",
+          label: "Email",
           type: "email",
           placeholder: "mail@google.com",
         },
         password: {
-          label: "Contraseña",
+          label: "Password",
           type: "password",
           placeholder: "Contraseña",
         },
       },
       async authorize(credentials) {
-        console.log({ credentials });
-        return (await dbUsers.checkUserEmailPassword(
+        const resp = (await dbUsers.checkUserEmailPassword(
           credentials!.email,
           credentials!.password
-        )) as any;
+        )) as any; 
+        return resp
       },
     }),
   ],

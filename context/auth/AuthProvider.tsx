@@ -10,6 +10,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { FormDataUser } from "@/app/auth/register/page";
+import { FullScreenLoading } from "@/components/ui";
+import { useWebSocket } from "next-ws/client";
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -29,12 +31,37 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   // const { replace, reload, query } = useRouter()
   const { data, status } = useSession()
   const [state, dispatch] = useReducer(authReducer, AuthInitialState);
+  const ws = useWebSocket();
+
+  const onRegisterLocalStorage = async (body: string, isPrivate: boolean) => {
+    localStorage.removeItem('thank')
+    try {
+      const { data } = await getYourMindUpApi.post("/publications", { body, isPrivate });
+      if (!isPrivate) {
+        ws?.send(body);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     if (status === 'authenticated') {
       dispatch({ type: 'Auth - Login', payload: data?.user as IUser })
+      if (localStorage.getItem('thank')) {
+        const thank = JSON.parse(localStorage.getItem('thank')!) as { body: string, isPrivate: boolean };
+        onRegisterLocalStorage(thank.body, thank.isPrivate).then(console.log).catch(console.log);
+      }
     }
   }, [status, data])
+
+  if (status === 'loading') {
+    return <FullScreenLoading />
+  }
+
+
+
 
 
   // const onCheckToken = async () => {
@@ -69,7 +96,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     }
   }
 
-  const onRegisterUser = async (newUser:FormDataUser): Promise<{ hasError: boolean; message?: string; }> => {
+  const onRegisterUser = async (newUser: FormDataUser): Promise<{ hasError: boolean; message?: string; }> => {
     try {
       const { data } = await getYourMindUpApi.post('/user/register', { ...newUser });
       const { token, user } = data;
