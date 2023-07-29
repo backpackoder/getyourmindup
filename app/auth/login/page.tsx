@@ -35,8 +35,13 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
 
   const onLoginForm = async ({ email, password }: FormData) => {
     setShowError(false);
-    await signIn("credentials", { email, password });
-
+    try {
+      const resp = await signIn("credentials", { email, password });
+      console.log(resp);
+      
+    } catch (error) {
+      console.log(error);
+    }
     // const isValidLogin = await onLoginUser(email, password);
     // if (!isValidLogin) {
     //   setShowError(true)
@@ -71,7 +76,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
                 label="Email"
                 type="email"
                 {...register("email", {
-                  required: "Este campo es requerido",
+                  required: "This field is required",
                   validate: validations.isEmail,
                 })}
                 error={!!errors.email}
@@ -88,8 +93,8 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
                 variant="filled"
                 fullWidth
                 {...register("password", {
-                  required: "Este campo es requerido",
-                  minLength: { value: 6, message: "Mínimo 6 caracteres" },
+                  required: "This field is required",
+                  minLength: { value: 6, message: "Min 6 characters" },
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -98,7 +103,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
 
             <Grid item xs={12} mt={2}>
               <Button size="large" fullWidth type="submit" disabled={showError}>
-                Ingresar
+                Log In
               </Button>
             </Grid>
 
@@ -107,7 +112,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
                 href={`/auth/register?p=${searchParams?.p?.toString() || "/"}`}
                 style={{ textDecoration: "underline" }}
               >
-                ¿No tienes cuenta?
+                You do not have an account?
               </Link>
             </Grid>
 

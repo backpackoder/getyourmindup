@@ -1,16 +1,16 @@
 "use client";
+import { useContext } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { AppBar, Box, Button, IconButton, List, Toolbar } from "@mui/material";
 import MenuOutlineIcon from "@mui/icons-material/MenuOutlined";
+import { AuthContext, UiContext } from "@/context";
 // Components
 import { Logo } from "../Logo";
-// Utils
-import { NAVBAR_ITEMS } from "@/components/ui/navbar/constants/navbarItems";
-import { useContext } from "react";
-import { AuthContext, UiContext } from "@/context";
-import { IMAGES } from "@/commons/commons";
 import Avatar from './Avatar';
 import { HideOnScroll } from './HideOnScroll'
+import { NAVBAR_ITEMS } from "@/components/ui/navbar/constants/navbarItems";
+// Utils
+import { IMAGES } from "@/commons/commons";
 import { amber, blue } from "@mui/material/colors";
 
 
@@ -45,7 +45,7 @@ export function NavbarMain() {
                 cursor: "pointer",
                 ":hover": {
                   backgroundColor: blue['A700'],
-                  borderRadius: 0
+                  borderRadius: 2
                 },
               }} key={route.path} href={route.path} startIcon={route.icon} >{route.label}</Button>;
             })}

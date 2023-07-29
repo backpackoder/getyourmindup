@@ -51,3 +51,55 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.slide-right {
+  animation: slideRight 0.7s linear 0s 1 normal forwards;
+}
+
+@keyframes slideRight {
+	0% {
+		opacity: 0;
+		transform: translateX(-250px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+.slide-left {
+  animation: slideLeft 0.7s linear 0s 1 normal forwards;
+}
+
+@keyframes slideLeft {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(-250px);
+	}
+}
+
+
+.scroll-side-thanks::-webkit-scrollbar-track
+{
+  background: linear-gradient(#0d47a1, #1565c0);
+  border-radius: 25px;
+}
+
+.scroll-side-thanks::-webkit-scrollbar
+{
+  width: 8px;
+  background: linear-gradient(#0d47a1, #1565c0);
+  border-radius: 25px;
+}
+
+.scroll-side-thanks::-webkit-scrollbar-thumb
+{
+  background: linear-gradient(#1e88e5, #1976d2);
+  border-radius: 25px;
+}
+
