@@ -15,9 +15,12 @@ const publicationSchema = new Schema(
         required: true,
       }
     },
+    createdAt: Number,
+    updatedAt: Number,
   },
   {
-    timestamps: true,
+    // timestamps: true,
+    timestamps: { currentTime: () => Date.now() },
   }
 );
 

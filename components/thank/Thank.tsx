@@ -1,10 +1,7 @@
 "use client";
-import { useCallback, useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useWebSocket } from "next-ws/client";
+import { useContext, useEffect, useState } from "react";
 import {
   Alert,
-  AlertTitle,
   Box,
   Button,
   Checkbox,
@@ -21,58 +18,27 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { AuthContext, UiContext } from "@/context";
 import { SideThanks } from "./sideThanks";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Link from "next/link";
-import { FormData, Thank } from "./types";
+import { usePublications } from "@/hooks/useThanks";
 
 
 export function Thank() {
-  const ws = useWebSocket();
-  const { setOpenSnackbarSuccess, setOpenSnackbarError } = useContext(UiContext);
   const { user } = useContext(AuthContext);
-  const [thanks, setThanks] = useState<Thank[]>([]);
+  const {
+    deleteThank,
+    errors,
+    handleSubmit,
+    onCreatePublication,
+    register,
+    setValue,
+    thankInStorage,
+    thanks,
+  } = usePublications();
+
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
+
   const [showSideThanks, setShowSideThanks] = useState<boolean>(true);
   const [effectHide, setEffectHide] = useState<boolean>(false);
-  const [thankInStorage, setThankInStorage] = useState<string | null>(null);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<FormData>();
-
-  const onCreatePublication = async ({ body, isPrivate }: FormData) => {
-
-    if (!user) {
-      localStorage.setItem('thank', JSON.stringify({ body, isPrivate }))
-      setThanks([...thanks, { body, itWasMe: true }])
-      return;
-    }
-
-    try {
-      const { data } = await getYourMindUpApi.post("/publications", { body, isPrivate });
-      if (!isPrivate) {
-        ws?.send(body);
-      }
-      setThanks([...thanks, { body, itWasMe: true }])
-      setOpenSnackbarSuccess(true);
-    } catch (error) {
-      setOpenSnackbarError(true);
-    }
-  };
-
-  const onMessage = useCallback((event: MessageEvent) => {
-    const resp = event.data.text();
-    const newThank = resp;
-    setThanks((t) => [...t, { body: newThank, itWasMe: false }]);
-  }, []);
-
-  useEffect(() => {
-    setThankInStorage(localStorage.getItem('thank'));
-    ws?.addEventListener("message", onMessage);
-    return () => ws?.removeEventListener("message", onMessage);
-  }, [onMessage, ws]);
 
   useEffect(() => {
     setValue("isPrivate", isPrivate);
@@ -86,6 +52,8 @@ export function Thank() {
     }, 700);
   }
 
+
+
   return (
     <>
       {
@@ -96,21 +64,8 @@ export function Thank() {
         {
           showSideThanks ?
             (
-              <Grid item md={4} display={'flex'} className={effectHide ? "slide-left" : "slide-right"}>
-                <SideThanks thanks={thanks} />
-                <Box
-                  sx={{
-                    // position: { xs: "relative", md: "absolute" },
-                    // top: { xs: 10, md: 90 },
-                    // left: { md: 28 },
-                  }}
-                  className="fadeIn"
-                >
-
-                  <IconButton sx={{ backgroundColor: '#008072', color: 'white' }} onClick={() => onHideSideThanks()} type="button" size="large">
-                    <ChevronLeftIcon />
-                  </IconButton>
-                </Box>
+              <Grid item xs={12} md={4} sx={{ marginLeft: -2, mt: user ? -4.5 : { xs: 0, md: -9.5 }, mb: { xs: 2, md: 0 } }} className={effectHide ? "slide-left" : "slide-right"}>
+                <SideThanks thanks={thanks} onClick={onHideSideThanks} deleteThank={deleteThank} />
               </Grid>
             ) : (
               <IconButton sx={{ backgroundColor: 'primary.main', color: 'white' }} onClick={() => setShowSideThanks(true)} type="button" size="large">
@@ -120,7 +75,7 @@ export function Thank() {
             )
 
         }
-        <Grid item md={showSideThanks ? 8 : 12}>
+        <Grid item xs={12} md={showSideThanks ? 8 : 12}>
           <Box
             component={"article"}
             sx={{
@@ -140,7 +95,7 @@ export function Thank() {
               Give a thank for something that happened today that made you happy or that you are grateful
               for.
             </Typography>
-            <form onSubmit={handleSubmit(onCreatePublication)} noValidate>
+            <form onSubmit={handleSubmit((args) => onCreatePublication(args, !!user))} noValidate>
               <Grid container spacing={2} alignContent={"center"} justifyContent={"center"}>
                 <Grid item xs={12}>
                   <TextField
@@ -153,7 +108,7 @@ export function Thank() {
                       required: "Este campo es requerido",
                     })}
                     variant="standard"
-                    defaultValue={thankInStorage || ''}
+                    defaultValue={thankInStorage?.body || ''}
                     error={!!errors.body}
                     helperText={errors.body?.message}
                   />
@@ -178,7 +133,7 @@ export function Thank() {
 
                 {
                   thankInStorage && !user && (
-                    <Alert sx={{ mt: 1, }} severity="info"><Link href='/auth/register?p=thanks'><strong> Sign Up</strong></Link> to continue enjoying this module - <Link href='/auth/register?p=thanks'><strong> Sign Up</strong></Link> </Alert>
+                    <Alert sx={{ mt: 1, }} severity="info"><Link href='/auth/register?p=thanks'>Sign Up </Link> to continue enjoying this module - <Link href='/auth/register?p=thanks'><strong> Sign Up</strong></Link> </Alert>
                   )
                 }
                 <Grid item xs={12} textAlign={"center"}>

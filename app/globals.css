@@ -82,3 +82,24 @@ a {
 		transform: translateX(-250px);
 	}
 }
+
+
+.scroll-side-thanks::-webkit-scrollbar-track
+{
+  background: linear-gradient(#0d47a1, #1565c0);
+  border-radius: 25px;
+}
+
+.scroll-side-thanks::-webkit-scrollbar
+{
+  width: 8px;
+  background: linear-gradient(#0d47a1, #1565c0);
+  border-radius: 25px;
+}
+
+.scroll-side-thanks::-webkit-scrollbar-thumb
+{
+  background: linear-gradient(#1e88e5, #1976d2);
+  border-radius: 25px;
+}
+
