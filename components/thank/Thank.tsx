@@ -19,7 +19,7 @@ import { AuthContext, UiContext } from "@/context";
 import { SideThanks } from "./sideThanks";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Link from "next/link";
-import { usePublications } from "@/hooks/useThanks";
+import { useThanks } from "@/hooks/useThanks";
 
 
 export function Thank() {
@@ -30,19 +30,18 @@ export function Thank() {
     handleSubmit,
     onCreatePublication,
     register,
-    setValue,
+    isPrivate,
+    setIsPrivate,
     thankInStorage,
     thanks,
-  } = usePublications();
+    isLoading,
+  } = useThanks();
 
-  const [isPrivate, setIsPrivate] = useState<boolean>(false);
+
 
   const [showSideThanks, setShowSideThanks] = useState<boolean>(true);
   const [effectHide, setEffectHide] = useState<boolean>(false);
 
-  useEffect(() => {
-    setValue("isPrivate", isPrivate);
-  }, [setValue, isPrivate]);
 
   const onHideSideThanks = () => {
     setEffectHide(true);
@@ -65,7 +64,7 @@ export function Thank() {
           showSideThanks ?
             (
               <Grid item xs={12} md={4} sx={{ marginLeft: -2, mt: user ? -4.5 : { xs: 0, md: -9.5 }, mb: { xs: 2, md: 0 } }} className={effectHide ? "slide-left" : "slide-right"}>
-                <SideThanks thanks={thanks} onClick={onHideSideThanks} deleteThank={deleteThank} />
+                <SideThanks thanks={thanks} onClick={onHideSideThanks} deleteThank={deleteThank} isLoading={isLoading} />
               </Grid>
             ) : (
               <IconButton sx={{ backgroundColor: 'primary.main', color: 'white' }} onClick={() => setShowSideThanks(true)} type="button" size="large">

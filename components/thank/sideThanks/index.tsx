@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Grid, IconButton, Typography } from '@mui/material'
+import { Alert, AlertTitle, Box, CircularProgress, Grid, IconButton, Typography } from '@mui/material'
 import React, { useContext } from 'react'
 import GradeIcon from '@mui/icons-material/Grade';
 import { amber, blue } from '@mui/material/colors';
@@ -6,14 +6,16 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CloseIcon from '@mui/icons-material/Close';
 import { AuthContext } from '@/context';
 import { IPublication } from '@/interfaces';
+import { FullScreenLoading } from '@/components/ui';
 
 interface Props {
   thanks: IPublication[];
   onClick: () => void;
   deleteThank: (id: string) => void;
+  isLoading: boolean;
 }
 
-export const SideThanks = ({ thanks, onClick, deleteThank }: Props) => {
+export const SideThanks = ({ thanks, onClick, deleteThank, isLoading }: Props) => {
   const { user } = useContext(AuthContext);
   return (
     <Box
@@ -46,12 +48,10 @@ export const SideThanks = ({ thanks, onClick, deleteThank }: Props) => {
       }}
         className="scroll-side-thanks"
       >
-
+        {
+          isLoading && <FullScreenLoading color='white' />
+        }
         {thanks?.map((thank) => {
-          console.log('user', user);
-          console.log('thank', thank);
-          console.log('user is', thank?.user === user?._id);
-          console.log('it was me', thank?.itWasMe);
           return (
             < Alert
               key={thank.body}

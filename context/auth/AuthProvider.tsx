@@ -36,7 +36,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   const onRegisterLocalStorage = async (body: string, isPrivate: boolean) => {
     localStorage.removeItem('thank')
     try {
-      const { data } = await getYourMindUpApi.post("/publications", { body, isPrivate });
+      const { data } = await getYourMindUpApi.post("/thanks", { body, isPrivate });
       if (!isPrivate) {
         ws?.send(body);
       }

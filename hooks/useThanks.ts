@@ -8,12 +8,14 @@ import { FormData } from "@/components/thank/types";
 import { useForm } from "react-hook-form";
 
 
-const getPublications = async () => {
-  const { data } = await getYourMindUpApi("/publications");
-  return data.publications;;
+const getThanks = async () => {
+  const { data } = await getYourMindUpApi("/thanks");
+  return data.publications;
 }
 
-export const usePublications = () => {
+export const useThanks = () => {
+  const ws = useWebSocket();
+  const { setOpenSnackbarSuccess, setOpenSnackbarError } = useContext(UiContext);
   const {
     register,
     handleSubmit,
@@ -22,10 +24,19 @@ export const usePublications = () => {
   } = useForm<FormData>();
   const [thanks, setThanks] = useState<IPublication[]>([]);
   const [thankInStorage, setThankInStorage] = useState<FormData | null>(null);
-  const ws = useWebSocket();
-  const { setOpenSnackbarSuccess, setOpenSnackbarError } = useContext(UiContext);
+  const [isPrivate, setIsPrivate] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   useEffect(() => {
-    getPublications().then(setThanks)
+    setValue("isPrivate", isPrivate);
+  }, [setValue, isPrivate]);
+
+  useEffect(() => {
+    setIsLoading(true)
+    getThanks().then((resp) => {
+      setThanks(resp)
+      setIsLoading(false)
+    })
   }, [])
 
   const onCreatePublication = async ({ body, isPrivate }: FormData, isAuthenticated: boolean) => {
@@ -35,7 +46,7 @@ export const usePublications = () => {
       return;
     }
     try {
-      const { data } = await getYourMindUpApi.post("/publications", { body, isPrivate });
+      const { data } = await getYourMindUpApi.post("/thanks", { body, isPrivate });
       if (!isPrivate) {
         ws?.send(body);
       }
@@ -75,6 +86,8 @@ export const usePublications = () => {
     register,
     handleSubmit,
     errors,
-    setValue,
+    setIsPrivate,
+    isPrivate,
+    isLoading,
   }
 }

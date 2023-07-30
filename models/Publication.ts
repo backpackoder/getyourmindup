@@ -1,6 +1,5 @@
-import { IPublication } from "../interfaces/publication";
-import { IUser } from "../interfaces/user";
 import mongoose, { Schema, model, type Model } from "mongoose";
+import { IPublication } from "../interfaces";
 
 const publicationSchema = new Schema(
   {
