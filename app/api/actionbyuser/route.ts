@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
+import { db, levelUp } from "@/db";
 import { ActionsByUser, ActionsOfTheDay } from "@/models";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/authOptions";
@@ -69,25 +69,12 @@ export async function POST(req: NextRequest) {
       { actionsDone: [...actionsByUser.actionsDone, { actionDone, story }] }
     )
       .lean();
-
     await db.disconnect();
+    await levelUp(actionsByUserUpdated?.user!)
 
-
-
-    return NextResponse.json({
-      actionsByUserUpdated,
-      actionsDone: [
-        ...actionsByUser.actionsDone,
-        {
-          actionDone,
-          story,
-        }
-      ]
-    });
+    return NextResponse.json(true);
   } catch (error) {
     console.log(error);
-    return NextResponse.json({
-      message: "Review server logs",
-    }, { status: 500 });
+    return NextResponse.json(false, { status: 500 });
   }
 }

@@ -65,7 +65,7 @@ export function NavbarMain() {
 
             {user ? (
               <>
-                <Avatar name={user.name} imgUrl={IMAGES.DEFAULT_PROFILE_IMAGE} />
+                <Avatar name={user.name} level={user.level} imgUrl={IMAGES.DEFAULT_PROFILE_IMAGE} />
 
               </>
             ) : (

@@ -8,24 +8,24 @@ import Link from "next/link";
 import { getYourMindUpApi } from "@/api";
 import { blue } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
+import RocketLaunchOutlinedIcon from '@mui/icons-material/RocketLaunchOutlined';
+import { IActionsOfTheDay } from "@/interfaces";
 
 const getActionOfTheDay = async () => {
-  const { data } = await getYourMindUpApi('');
-  return 'action'
+  const { data } = await getYourMindUpApi('/actionbyuser');
+  console.log(data);
+  return data
 }
 
 export function GoodActionOfTheDay() {
   const { isLoggedIn } = useContext(AuthContext);
-  const {push} = useRouter()
+  const { push } = useRouter()
   const [hasClicked, setHasClicked] = useState(false);
-  const [actionOfTheDay, setActionOfTheDay] = useState('')
+  const [actionOfTheDay, setActionOfTheDay] = useState<IActionsOfTheDay>()
   const [isLoading, setIsLoading] = useState(false)
-  useEffect(() => {
-    console.log('action of the day');
-  }, [])
 
   const onGetActionOfTheDay = async () => {
-    if (isLoading) return;
+    if (isLoading || actionOfTheDay) return;
     if (!isLoggedIn) {
       push('/auth/login?p=/action');
       return;
@@ -34,7 +34,7 @@ export function GoodActionOfTheDay() {
     setIsLoading(true);
     try {
       const action = await getActionOfTheDay();
-      setActionOfTheDay(action)
+      setActionOfTheDay(action);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -56,7 +56,7 @@ export function GoodActionOfTheDay() {
     >
       {
         !isLoggedIn &&
-        <Alert sx={{ mt: -3 }} severity="warning">You must register to enjoy all the features — <Link href='/auth/register?p=thanks'><strong> Sign Up</strong></Link> </Alert>
+        <Alert sx={{ mt: -3 }} severity="warning">You must Log In to enjoy all the features — <Link href='/auth/login?p=/action'><strong> Log In</strong></Link> </Alert>
       }
       <Typography variant="h4" component="h4">
         {!actionOfTheDay
@@ -73,33 +73,46 @@ export function GoodActionOfTheDay() {
         sx={{
           background: actionOfTheDay ? 'linear-gradient(#008072, #290fb5);' : 'linear-gradient(#cbccfc, #a7abfa);',
           color: !actionOfTheDay ? 'black' : 'white',
-          cursor: !actionOfTheDay && !isLoading ? 'pointer' : 'none',
+          cursor: !actionOfTheDay && !isLoading ? 'pointer' : 'default',
           py: 2,
           px: 4,
+          pr: !actionOfTheDay ? 6 : 3,
           borderRadius: 4,
-          boxShadow: "lg",
+          boxShadow: "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);",
+          alignItems: 'center',
+          fontWeight: 700,
+          ':hover': !actionOfTheDay ? {
+            background: '#8188f9',
+          } : {},
+
         }}
+
         onClick={onGetActionOfTheDay}
       >
 
         {
-          !isLoggedIn ? 'Log in to get your action of the day' : !actionOfTheDay && !isLoading && 'Get action of the day'
+          !isLoggedIn ? 'Log in to get your action of the day' : !actionOfTheDay && !isLoading && (
+            <>
+              Get action of the day
+              <RocketLaunchOutlinedIcon sx={{ position: 'absolute', ml: 0.3, color: '#212121' }} />
+            </>
+          )
         }
 
 
         {isLoading && <CircularProgress thickness={2} />}
         {
-          actionOfTheDay &&
+          actionOfTheDay?.body &&
           <Typography variant="h4" component="p" className="fadeIn">
-            {actionOfTheDay}
+            {actionOfTheDay.body}
           </Typography>
         }
       </Box>
 
-      {hasClicked ? (
-        <Comment setHasClicked={setHasClicked} />
+      {hasClicked && actionOfTheDay?._id ? (
+        <Comment setHasClicked={setHasClicked} actionDone={actionOfTheDay?._id} />
       ) : (
-        <Button variant="contained" disabled={!actionOfTheDay } onClick={() => setHasClicked(true)}>
+        <Button variant="contained" disabled={!actionOfTheDay?.body} onClick={() => setHasClicked(true)}>
           I did it!
         </Button>
       )}

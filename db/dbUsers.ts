@@ -9,7 +9,7 @@ export const checkUserEmailPassword = async (
   const emailLowerCase = email.toLocaleLowerCase();
   try {
     await db.connect();
-    const user = await User.findOne({ email: emailLowerCase });
+    const user = await User.findOne({ email: emailLowerCase }).lean();
     await db.disconnect();
     if (!user) {
       return null;
@@ -17,11 +17,12 @@ export const checkUserEmailPassword = async (
     if (!bcrypt.compareSync(password, user.password!)) {
       return null;
     }
-    const { role, name, _id } = user;
+    const { role, name, _id, level } = user;
     return {
       role,
       name,
       _id,
+      level,
       email: emailLowerCase,
     };
   } catch (error) {

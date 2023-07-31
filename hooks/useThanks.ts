@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { getYourMindUpApi } from "@/api";
 import { IPublication } from "@/interfaces";
 import { useWebSocket } from "next-ws/client";
-import { UiContext } from "@/context";
+import { AuthContext, UiContext } from "@/context";
 import { FormData } from "@/components/thank/types";
 import { useForm } from "react-hook-form";
 
@@ -16,6 +16,7 @@ const getThanks = async () => {
 export const useThanks = () => {
   const ws = useWebSocket();
   const { setOpenSnackbarSuccess, setOpenSnackbarError } = useContext(UiContext);
+  const { onLevelUp } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -50,6 +51,7 @@ export const useThanks = () => {
       if (!isPrivate) {
         ws?.send(body);
       }
+      onLevelUp()
       setThanks([{ body, itWasMe: true, _id: new Date().getTime().toString() } as IPublication, ...thanks,])
       setOpenSnackbarSuccess(true);
       setValue('body', '')

@@ -57,7 +57,7 @@ export function Thank() {
     <>
       {
         !user &&
-        <Alert sx={{ mt: -3 }} severity="warning">You must register to enjoy all the features — <Link href='/auth/register?p=thanks'><strong> Sign Up</strong></Link> </Alert>
+        <Alert sx={{ mt: -3 }} severity="warning">You must Log In to enjoy all the features — <Link href='/auth/login?p=/thanks'><strong> Log In</strong></Link> </Alert>
       }
       <Grid container spacing={2}>
         {
@@ -132,7 +132,7 @@ export function Thank() {
 
                 {
                   thankInStorage && !user && (
-                    <Alert sx={{ mt: 1, }} severity="info"><Link href='/auth/register?p=thanks'>Sign Up </Link> to continue enjoying this module - <Link href='/auth/register?p=thanks'><strong> Sign Up</strong></Link> </Alert>
+                    <Alert sx={{ mt: 1, }} severity="info"><Link href='/auth/login?p=/thanks'>Log In </Link> to continue enjoying this module - <Link href='/auth/login?p=/thanks'><strong> Log In</strong></Link> </Alert>
                   )
                 }
                 <Grid item xs={12} textAlign={"center"}>
