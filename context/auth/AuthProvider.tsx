@@ -2,16 +2,17 @@
 
 import { SessionProvider } from "next-auth/react";
 import { FC, useEffect, useMemo, useReducer } from 'react';
-import { AuthContext, authReducer } from './';
-import { IUser } from '@/interfaces';
-import { getYourMindUpApi } from '@/api';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
+import { useWebSocket } from "next-ws/client";
+import confetti from "canvas-confetti";
+import { AuthContext, authReducer } from './';
+import { IUser } from '@/interfaces';
+import { getYourMindUpApi } from '@/api';
 import { FormDataUser } from "@/app/auth/register/page";
 import { FullScreenLoading } from "@/components/ui";
-import { useWebSocket } from "next-ws/client";
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -27,8 +28,12 @@ interface Props {
   children: JSX.Element | JSX.Element[]
 }
 
+const getUserById = async (): Promise<IUser> => {
+  const { data } = await getYourMindUpApi('/user');
+  return data;
+}
+
 export const AuthProvider: FC<Props> = ({ children }) => {
-  // const { replace, reload, query } = useRouter()
   const { data, status } = useSession()
   const [state, dispatch] = useReducer(authReducer, AuthInitialState);
   const ws = useWebSocket();
@@ -36,7 +41,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   const onRegisterLocalStorage = async (body: string, isPrivate: boolean) => {
     localStorage.removeItem('thank')
     try {
-      const { data } = await getYourMindUpApi.post("/publications", { body, isPrivate });
+      const { data } = await getYourMindUpApi.post("/thanks", { body, isPrivate });
       if (!isPrivate) {
         ws?.send(body);
       }
@@ -48,7 +53,9 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      dispatch({ type: 'Auth - Login', payload: data?.user as IUser })
+      getUserById().then(({ level }) => {
+        dispatch({ type: 'Auth - Login', payload: { ...data?.user, level } as IUser })
+      })
       if (localStorage.getItem('thank')) {
         const thank = JSON.parse(localStorage.getItem('thank')!) as { body: string, isPrivate: boolean };
         onRegisterLocalStorage(thank.body, thank.isPrivate).then(console.log).catch(console.log);
@@ -62,26 +69,19 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
 
 
-
-
-  // const onCheckToken = async () => {
-  //   if (!Cookies.get('token')) {
-  //     return;
-  //   }
-  //   try {
-  //     const { data } = await getYourMindUpApi.get('/user/validate-token');
-  //     const { token, user } = data;
-  //     Cookies.set('token', token);
-  //     dispatch({ type: 'Auth - Login', payload: user });
-  //     // replace('/')
-  //   } catch (error) {
-  //     Cookies.remove('token');
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   onCheckToken()
-  // }, [])
+  const onLevelUp = () => {
+    dispatch({ type: 'Auth - LevelUp', payload: data?.user as IUser })
+    confetti({
+      zIndex: 999,
+      particleCount: 100,
+      spread: 160,
+      angle: -100,
+      origin: {
+        x: 1,
+        y: 0,
+      },
+    });
+  }
 
   const onLoginUser = async (email: string, password: string): Promise<boolean> => {
     try {
@@ -126,7 +126,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     // reload();
   }
   return (
-    <AuthContext.Provider value={{ ...state, onLoginUser, onRegisterUser, onLogout }}>
+    <AuthContext.Provider value={{ ...state, onLevelUp, onLoginUser, onRegisterUser, onLogout }}>
       {children}
     </AuthContext.Provider>
   )

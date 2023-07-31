@@ -38,6 +38,8 @@ export const authOptions: NextAuthOptions = {
           credentials!.email,
           credentials!.password
         )) as any; 
+        console.log('autorize');
+        console.log({resp});
         return resp
       },
     }),
@@ -57,8 +59,9 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, account, user }: any) {
       if (account) {
+        console.log('jtw+++++++===================');
         token.accessToken = account.access_token;
-
+        console.log('jtw: ', {account, token, user});
         switch (account.type) {
           case "credentials":
             token.user = user;
@@ -72,6 +75,8 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token, user }: any) {
+      console.log('session======= =--- -==');
+      console.log({session, token, user});
       session.accessToken = token.accessToken;
       session.user = token.user;
       return session;

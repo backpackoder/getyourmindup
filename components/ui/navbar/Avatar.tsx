@@ -9,15 +9,17 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { UiContext } from '@/context';
 import { signOut } from 'next-auth/react';
+import { Badge, Chip } from '@mui/material';
 
 const options = [{ label: 'Profile', action: '' }, { label: 'Account', action: '' }, { label: 'Dashboard', action: 'Open Dashboard' }, { label: 'Logout', action: 'On Logout' }];
 
 interface Props {
   imgUrl: string;
   name: string;
+  level: number;
 }
 
-function ResponsiveAppBar({ imgUrl, name }: Props) {
+function ResponsiveAppBar({ imgUrl, name, level }: Props) {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const { toggleDashboardMenu } = React.useContext(UiContext);
 
@@ -41,9 +43,17 @@ function ResponsiveAppBar({ imgUrl, name }: Props) {
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open options">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt={`${name}'s profile picture`} src={imgUrl} />
-        </IconButton>
+        <Badge
+          overlap="circular"
+          color="secondary"
+          className="on-entrance"
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          badgeContent={`lvl ${level}`}
+        >
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt={`${name}'s profile picture`} src={imgUrl} />
+          </IconButton>
+        </Badge>
       </Tooltip>
       <Menu
         sx={{ mt: '45px' }}

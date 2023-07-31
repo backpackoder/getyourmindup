@@ -7,6 +7,7 @@ interface ContextProps {
   isLoggedIn: boolean;
   user?: IUser;
   onLogout: () => void;
+  onLevelUp: () => void;
   onLoginUser: (email: string, password: string) => Promise<boolean>;
   onRegisterUser: (newUser:FormDataUser) => Promise<{ hasError: boolean; message?: string; }>;
 }

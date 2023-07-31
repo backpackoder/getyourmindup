@@ -1,10 +1,45 @@
 "use client";
 
-import { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import { Alert, Box, Button, Chip, CircularProgress, TextField, Typography } from "@mui/material";
+import { Comment } from "./comment";
+import { AuthContext } from "@/context";
+import Link from "next/link";
+import { getYourMindUpApi } from "@/api";
+import { blue } from "@mui/material/colors";
+import { useRouter } from "next/navigation";
+import RocketLaunchOutlinedIcon from '@mui/icons-material/RocketLaunchOutlined';
+import { IActionsOfTheDay } from "@/interfaces";
+
+const getActionOfTheDay = async () => {
+  const { data } = await getYourMindUpApi('/actionbyuser');
+  console.log(data);
+  return data
+}
 
 export function GoodActionOfTheDay() {
+  const { isLoggedIn } = useContext(AuthContext);
+  const { push } = useRouter()
   const [hasClicked, setHasClicked] = useState(false);
+  const [actionOfTheDay, setActionOfTheDay] = useState<IActionsOfTheDay>()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onGetActionOfTheDay = async () => {
+    if (isLoading || actionOfTheDay) return;
+    if (!isLoggedIn) {
+      push('/auth/login?p=/action');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const action = await getActionOfTheDay();
+      setActionOfTheDay(action);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <Box
@@ -17,84 +52,70 @@ export function GoodActionOfTheDay() {
         gap: 4,
         width: "100%",
         padding: 4,
-        border: "1px solid black",
-        borderRadius: 4,
-        boxShadow: "lg",
       }}
     >
-      <Typography variant="h3" component="h2">
-        The good action to realize for today is...
+      {
+        !isLoggedIn &&
+        <Alert sx={{ mt: -3 }} severity="warning">You must Log In to enjoy all the features — <Link href='/auth/login?p=/action'><strong> Log In</strong></Link> </Alert>
+      }
+      <Typography variant="h4" component="h4">
+        {!actionOfTheDay
+          ?
+          'We invite you to do a concrete good action today'
+          :
+          ' The good action to realize for today is...'
+        }
+
       </Typography>
 
       <Box
+        className="fadeIn"
         sx={{
-          backgroundColor: "rgb(240,240,240)",
+          background: actionOfTheDay ? 'linear-gradient(#008072, #290fb5);' : 'linear-gradient(#cbccfc, #a7abfa);',
+          color: !actionOfTheDay ? 'black' : 'white',
+          cursor: !actionOfTheDay && !isLoading ? 'pointer' : 'default',
           py: 2,
           px: 4,
-          border: "1px solid black",
+          pr: !actionOfTheDay ? 6 : 3,
           borderRadius: 4,
-          boxShadow: "lg",
+          boxShadow: "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);",
+          alignItems: 'center',
+          fontWeight: 700,
+          ':hover': !actionOfTheDay ? {
+            background: '#8188f9',
+          } : {},
+
         }}
+
+        onClick={onGetActionOfTheDay}
       >
-        <Typography variant="h4" component="p">
-          Make a new friend
-        </Typography>
+
+        {
+          !isLoggedIn ? 'Log in to get your action of the day' : !actionOfTheDay && !isLoading && (
+            <>
+              Get action of the day
+              <RocketLaunchOutlinedIcon sx={{ position: 'absolute', ml: 0.3, color: '#212121' }} />
+            </>
+          )
+        }
+
+
+        {isLoading && <CircularProgress thickness={2} />}
+        {
+          actionOfTheDay?.body &&
+          <Typography variant="h4" component="p" className="fadeIn">
+            {actionOfTheDay.body}
+          </Typography>
+        }
       </Box>
 
-      {hasClicked ? (
-        <Comment setHasClicked={setHasClicked} />
+      {hasClicked && actionOfTheDay?._id ? (
+        <Comment setHasClicked={setHasClicked} actionDone={actionOfTheDay?._id} />
       ) : (
-        <Button variant="contained" onClick={() => setHasClicked(true)}>
+        <Button variant="contained" disabled={!actionOfTheDay?.body} onClick={() => setHasClicked(true)}>
           I did it!
         </Button>
       )}
-    </Box>
-  );
-}
-
-type CommentProps = {
-  setHasClicked: (value: boolean) => void;
-};
-
-function Comment({ setHasClicked }: CommentProps) {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 4,
-      }}
-    >
-      <Typography>Explain us how you did it and how you felt doing so:</Typography>
-
-      <TextField
-        id="outlined-multiline-static"
-        label="Explain"
-        multiline
-        minRows={4}
-        className="w-full"
-      />
-
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 4,
-        }}
-      >
-        {/* <Box className="flex flex-wrap items-center justify-center gap-8"> */}
-        <Button variant="contained" onClick={() => setHasClicked(false)}>
-          Cancel
-        </Button>
-
-        <Button variant="contained" onClick={() => {}}>
-          Confirm
-        </Button>
-      </Box>
     </Box>
   );
 }
