@@ -27,6 +27,7 @@ export const useThanks = () => {
   const [thankInStorage, setThankInStorage] = useState<FormData | null>(null);
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isModuleFinish, setIsModuleFinish] = useState<boolean>(false);
 
   useEffect(() => {
     setValue("isPrivate", isPrivate);
@@ -54,8 +55,9 @@ export const useThanks = () => {
       onLevelUp()
       setThanks([{ body, itWasMe: true, _id: new Date().getTime().toString() } as IPublication, ...thanks,])
       setOpenSnackbarSuccess(true);
-      setValue('body', '')
-      setValue('isPrivate', false)
+      setValue('body', '');
+      setValue('isPrivate', false);
+      setIsModuleFinish(true);
     } catch (error) {
       setOpenSnackbarError(true);
     }
@@ -91,5 +93,7 @@ export const useThanks = () => {
     setIsPrivate,
     isPrivate,
     isLoading,
+    isModuleFinish,
+    setIsModuleFinish,
   }
 }

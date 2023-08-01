@@ -28,13 +28,13 @@ export const UiProvider: FC<Props> = ({ children }) => {
   return (
     <UiContext.Provider value={{ ...state, toggleSideMenu, setOpenSnackbarSuccess, setOpenSnackbarError, toggleDashboardMenu }}>
 
-      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={openSnackbarSuccess} autoHideDuration={4000} onClose={() => setOpenSnackbarSuccess(false)}>
+      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={openSnackbarSuccess} autoHideDuration={4000} onClose={() => setOpenSnackbarSuccess(false)}>
         <Alert severity="success" sx={{ width: '100%' }}>
           The request was completed correctly
         </Alert>
       </Snackbar>
 
-      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={openSnackbarError} autoHideDuration={4000} onClose={() => setOpenSnackbarError(false)}>
+      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={openSnackbarError} autoHideDuration={4000} onClose={() => setOpenSnackbarError(false)}>
         <Alert severity="error" sx={{ width: '100%' }}>
           The request could not be completed
         </Alert>
