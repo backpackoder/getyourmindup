@@ -21,7 +21,6 @@ const createActionByUser = async ({
     actionDone,
     story
   });
-  console.log(data);
   return data;
 }
 

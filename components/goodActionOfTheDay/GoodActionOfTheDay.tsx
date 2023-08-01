@@ -1,19 +1,16 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { Alert, Box, Button, Chip, CircularProgress, TextField, Typography } from "@mui/material";
+import { useContext, useState } from "react";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Comment } from "./comment";
 import { AuthContext } from "@/context";
-import Link from "next/link";
 import { getYourMindUpApi } from "@/api";
-import { blue } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
 import RocketLaunchOutlinedIcon from '@mui/icons-material/RocketLaunchOutlined';
 import { IActionsOfTheDay } from "@/interfaces";
 
 const getActionOfTheDay = async () => {
   const { data } = await getYourMindUpApi('/actionbyuser');
-  console.log(data);
   return data
 }
 
@@ -54,10 +51,6 @@ export function GoodActionOfTheDay() {
         padding: 4,
       }}
     >
-      {
-        !isLoggedIn &&
-        <Alert sx={{ mt: -3 }} severity="warning">You must Log In to enjoy all the features — <Link href='/auth/login?p=/action'><strong> Log In</strong></Link> </Alert>
-      }
       <Typography variant="h4" component="h4">
         {!actionOfTheDay
           ?
