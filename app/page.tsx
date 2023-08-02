@@ -3,6 +3,7 @@ import { Psychologist } from "@/components/psychologists/Psychologists";
 import { BlogList } from "@/components/blog/BlogList";
 import { Box, Button, Typography } from "@mui/material";
 import { RocketLaunchOutlined } from "@mui/icons-material";
+import About from "./about/page";
 
 export default async function Home() {
   return (
@@ -29,6 +30,7 @@ export default async function Home() {
         </Box>
         <Button href="/thank" size="large" endIcon={<RocketLaunchOutlined />} variant="contained">Lets go</Button>
       </Box>
+      <About />
       <Psychologist />
       <BlogList />
     </>

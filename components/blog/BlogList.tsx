@@ -9,6 +9,7 @@ import { articles } from "@/utils/blogArticles/articles";
 
 // Commons
 import { ROUTES } from "@/commons/commons";
+import { blue } from "@mui/material/colors";
 
 export function BlogList() {
   return (
@@ -20,11 +21,11 @@ export function BlogList() {
         alignItems: "center",
         justifyContent: "center",
         gap: 4,
-        width: "100%",
+        width: "90%",
         padding: 4,
-        border: "1px solid black",
-        borderRadius: 4,
+        borderRadius: '1rem',
         boxShadow: "lg",
+        background: `linear-gradient(${blue[200]}, ${blue[300]});`,
       }}
     >
       <Typography variant="h3" component="h2">
@@ -44,9 +45,9 @@ export function BlogList() {
             key={article.title}
             sx={{
               maxWidth: "250px",
-              bgcolor: "lightblue",
+              background: `linear-gradient(${blue[200]}, ${blue[300]});`,
               padding: 2,
-              borderRadius: "8px",
+              borderRadius: "1rem",
               cursor: "pointer",
               ":hover": {
                 transform: "scale(1.05)",

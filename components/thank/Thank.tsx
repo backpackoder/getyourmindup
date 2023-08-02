@@ -20,6 +20,7 @@ import { SideThanks } from "./sideThanks";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Link from "next/link";
 import { useThanks } from "@/hooks/useThanks";
+import { FinishModule } from "../shared/finishModule";
 
 
 export function Thank() {
@@ -81,48 +82,13 @@ export function Thank() {
       }
       <Grid item xs={12} md={showSideThanks ? 8 : 12}>
         {
-          true ? (
-            <Box
-              component={"article"}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "calc(100vh - 150px)",
-                gap: 4,
-                mt: 4,
-              }}
-            >
-              <Typography variant="h5" component="p">
-                Congratulations! You have completed this module, we invite you to go to the next
-              </Typography>
-              <Grid textAlign={"center"}>
-                <Button
-                  variant="contained"
-                  type="button"
-                  href="/action"
-                  endIcon={<RocketLaunchOutlined />}
-                >
-                  Next module
-                </Button>
-              </Grid>
-              <Typography variant="h6" component="p">
-                Or...
-              </Typography>
-              <Typography variant="h6" component="p">
-                Do you want to say thanks again?
-              </Typography>
-              <Grid textAlign={"center"}>
-                <Button
-                  variant="contained"
-                  type="button"
-                  onClick={() => setIsModuleFinish(false)}
-                >
-                  Give thanks again
-                </Button>
-              </Grid>
-            </Box>
+          isModuleFinish ? (
+
+            <FinishModule 
+                textToAgain="Do you want to say thanks again?" 
+                setIsModuleFinish={setIsModuleFinish}
+                href="/action" />
+              
           )
             : (
               <Box

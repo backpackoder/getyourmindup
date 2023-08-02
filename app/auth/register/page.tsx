@@ -8,9 +8,9 @@ import { useForm } from "react-hook-form";
 import { Box, Grid, Typography, TextField, Button, Chip, MenuItem, FormControl, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { AuthLayout } from "@/components/layouts/authLayout";
 import { validations } from "@/utils";
 import { AuthContext } from "@/context";
+import { blue } from "@mui/material/colors";
 
 export type FormDataUser = {
   name: string;
@@ -56,7 +56,12 @@ const RegisterPage = ({ searchParams,
     await signIn("credentials", { email: newUser.email, password: newUser.password });
   };
   return (
-    <AuthLayout title="Ingresa">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="calc(100vh - 200px)"
+    >
       <form onSubmit={handleSubmit(onRegisterForm)} noValidate>
         <Box sx={{ width: 350, padding: "10px 20px" }}>
           <Grid container spacing={2}>
@@ -152,14 +157,14 @@ const RegisterPage = ({ searchParams,
             <Grid item xs={12}>
               <Accordion>
                 <AccordionSummary
-                  sx={{ backgroundColor: "rgba(0, 0, 0, 0.06)" }}
+                  sx={{ backgroundColor: blue[100] }}
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
                   <Typography>Optional fields</Typography>
                 </AccordionSummary>
-                <AccordionDetails sx={{ padding: 0 }}>
+                <AccordionDetails sx={{ padding: 0, backgroundColor: '#e3f2fd' }}>
                   <Grid container spacing={1}>
 
                     <Grid item xs={12}>
@@ -259,7 +264,7 @@ const RegisterPage = ({ searchParams,
           </Grid>
         </Box>
       </form>
-    </AuthLayout>
+    </Box>
   );
 };
 

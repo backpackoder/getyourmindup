@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 type CommentProps = {
   setHasClicked: (value: boolean) => void;
   actionDone: string;
+  setIsFinishModule: (state: boolean) => void;
 };
 
 type FormData = { story: string; }
@@ -17,7 +18,7 @@ type DataPost = { actionDone: string; story: string; }
 const createActionByUser = async ({
   actionDone,
   story, }: DataPost) => {
-  const {data} = await getYourMindUpApi.post('/actionbyuser', {
+  const { data } = await getYourMindUpApi.post('/actionbyuser', {
     actionDone,
     story
   });
@@ -25,20 +26,23 @@ const createActionByUser = async ({
 }
 
 
-export function Comment({ setHasClicked, actionDone }: CommentProps) {
-  const {onLevelUp} = useContext(AuthContext);
+export function Comment({ setHasClicked, actionDone, setIsFinishModule }: CommentProps) {
+  const { onLevelUp } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FormData>();
 
 
 
   const onCreateActionByUser = async ({ story }: FormData) => {
     const isCreatedActionByUser = await createActionByUser({ actionDone, story });
-    if ( isCreatedActionByUser ) {
+    if (isCreatedActionByUser) {
       onLevelUp();
+      setValue('story', '');
+      setIsFinishModule(true)
     }
   }
 

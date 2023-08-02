@@ -129,24 +129,25 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     // reload();
   }
 
-
   return (
     <AuthContext.Provider value={{ ...state, onLevelUp, onLoginUser, onRegisterUser, onLogout }}>
       {
-        state.user ?
-          (
-            <StepperCore />
-          )
-          : (
-            <Box sx={{
-              position: { xs: 'relative', lg: 'absolute' },
-              top: 100,
-              width: { xs: '95vw', sm: '60vw', md: '40vw', lg: '30vw' },
-              left: { xs: '2.5vw', sm: '20vw', md: '33vw', lg: '35vw' },
-            }}>
-              <Alert sx={{ mt: -3 }} severity="warning">You must Log In to enjoy all the features — <Link href={`/auth/login?p=${asPath}`}><strong> Log In</strong></Link> </Alert>
-            </Box>
-          )
+        state.user &&
+        (
+          <StepperCore />
+        )
+      }
+      {
+        !state?.user && !['/auth/register', '/auth/login'].includes(asPath) && (
+          <Box sx={{
+            position: { xs: 'relative', lg: 'absolute' },
+            top: 100,
+            width: { xs: '95vw', sm: '60vw', md: '40vw', lg: '30vw' },
+            left: { xs: '2.5vw', sm: '20vw', md: '33vw', lg: '35vw' },
+          }}>
+            <Alert sx={{ mt: -3 }} severity="warning">You must Log In to enjoy all the features — <Link href={`/auth/login?p=${asPath}`}><strong> Log In</strong></Link> </Alert>
+          </Box>
+        )
       }
       {children}
     </AuthContext.Provider>
