@@ -5,7 +5,6 @@ import { getProviders, signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Box, Grid, Typography, TextField, Button, Chip, Divider } from "@mui/material";
-import { AuthLayout } from "@/components/layouts/authLayout";
 import { validations } from "@/utils";
 import { ErrorOutline } from "@mui/icons-material";
 import { redirect } from "next/navigation";
@@ -38,7 +37,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
     try {
       const resp = await signIn("credentials", { email, password });
       console.log(resp);
-      
+
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +52,12 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
   };
 
   return (
-    <AuthLayout title="Ingresar">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="calc(100vh - 200px)"
+    >
       <form onSubmit={handleSubmit(onLoginForm)} noValidate>
         <Box sx={{ width: 350, padding: "10px 20px" }}>
           <Grid container>
@@ -141,7 +145,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
           </Grid>
         </Box>
       </form>
-    </AuthLayout>
+    </Box>
   );
 };
 

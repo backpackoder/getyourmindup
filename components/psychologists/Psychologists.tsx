@@ -7,6 +7,7 @@ import { psychologists } from "@/utils/psychologists";
 
 // Commons
 import { ROUTES } from "@/commons/commons";
+import { blue } from "@mui/material/colors";
 
 export function Psychologist() {
   return (
@@ -17,9 +18,10 @@ export function Psychologist() {
         alignItems: "start",
         justifyContent: "start",
         gap: 2,
-        width: "100%",
-        backgroundColor: "rgba(0, 0, 0, 0.1)",
+        width: "90%",
+        background: `linear-gradient(${blue[100]}, ${blue[200]});`,
         p: 2,
+        borderRadius: "1rem",
       }}
     >
       <Typography variant="h4" component="h3">

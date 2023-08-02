@@ -1,10 +1,9 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
-import { FC, useEffect, useMemo, useReducer } from 'react';
+import { FC, useEffect, useReducer } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { useWebSocket } from "next-ws/client";
 import confetti from "canvas-confetti";
@@ -13,6 +12,9 @@ import { IUser } from '@/interfaces';
 import { getYourMindUpApi } from '@/api';
 import { FormDataUser } from "@/app/auth/register/page";
 import { FullScreenLoading } from "@/components/ui";
+import Link from "next/link";
+import { Alert, Box } from "@mui/material";
+import { StepperCore } from '@/components/ui/stepperCore';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -33,8 +35,10 @@ const getUserById = async (): Promise<IUser> => {
   return data;
 }
 
+
 export const AuthProvider: FC<Props> = ({ children }) => {
-  const { data, status } = useSession()
+  const { data, status } = useSession();
+  const asPath = usePathname()
   const [state, dispatch] = useReducer(authReducer, AuthInitialState);
   const ws = useWebSocket();
 
@@ -88,7 +92,6 @@ export const AuthProvider: FC<Props> = ({ children }) => {
       const { data } = await getYourMindUpApi.post('/user/login', { email, password });
       const { token, user } = data;
       Cookies.set('token', token);
-      console.log(data);
       dispatch({ type: 'Auth - Login', payload: user });
       return true;
     } catch (error) {
@@ -125,8 +128,27 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     // Cookies.remove('token');
     // reload();
   }
+
   return (
     <AuthContext.Provider value={{ ...state, onLevelUp, onLoginUser, onRegisterUser, onLogout }}>
+      {
+        state.user &&
+        (
+          <StepperCore />
+        )
+      }
+      {
+        !state?.user && !['/auth/register', '/auth/login'].includes(asPath) && (
+          <Box sx={{
+            position: { xs: 'relative', lg: 'absolute' },
+            top: 100,
+            width: { xs: '95vw', sm: '60vw', md: '40vw', lg: '30vw' },
+            left: { xs: '2.5vw', sm: '20vw', md: '33vw', lg: '35vw' },
+          }}>
+            <Alert sx={{ mt: -3 }} severity="warning">You must Log In to enjoy all the features — <Link href={`/auth/login?p=${asPath}`}><strong> Log In</strong></Link> </Alert>
+          </Box>
+        )
+      }
       {children}
     </AuthContext.Provider>
   )
