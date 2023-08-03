@@ -22,21 +22,19 @@ export const UiProvider: FC<Props> = ({ children }) => {
   const [openSnackbarSuccess, setOpenSnackbarSuccess] = useState<boolean>(false)
   const [openSnackbarError, setOpenSnackbarError] = useState<boolean>(false)
 
-
-  const toggleSideMenu = () => dispatch({ type: "[UI] - ToggleMenu" });
-  const toggleMenu = () => dispatch({ type: "[UI] - openMenu" });
-  const toggleDashboardMenu = () => dispatch({ type: "[UI] - openDashboardMenu" });
+  const toggleSideMenu = () => dispatch({ type: "[UI] - ToggleSideMenu" });
+  const toggleDashboardMenu = () => dispatch({ type: "[UI] - toggleDashboardMenu" });
 
   return (
-    <UiContext.Provider value={{ ...state, toggleSideMenu, setOpenSnackbarSuccess, setOpenSnackbarError, toggleMenu, toggleDashboardMenu }}>
+    <UiContext.Provider value={{ ...state, toggleSideMenu, setOpenSnackbarSuccess, setOpenSnackbarError, toggleDashboardMenu }}>
 
-      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={openSnackbarSuccess} autoHideDuration={4000} onClose={() => setOpenSnackbarSuccess(false)}>
+      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={openSnackbarSuccess} autoHideDuration={4000} onClose={() => setOpenSnackbarSuccess(false)}>
         <Alert severity="success" sx={{ width: '100%' }}>
           The request was completed correctly
         </Alert>
       </Snackbar>
 
-      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={openSnackbarError} autoHideDuration={4000} onClose={() => setOpenSnackbarError(false)}>
+      <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={openSnackbarError} autoHideDuration={4000} onClose={() => setOpenSnackbarError(false)}>
         <Alert severity="error" sx={{ width: '100%' }}>
           The request could not be completed
         </Alert>

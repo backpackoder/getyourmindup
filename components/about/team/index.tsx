@@ -11,9 +11,7 @@ export function Team() {
         display: "flex",
         flexDirection: "column",
         gap: 4,
-        bgcolor: "lightblue",
         p: 4,
-        borderRadius: "1rem",
       }}
     >
       <Typography variant="h4" component="h3">

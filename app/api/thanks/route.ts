@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from "@/db";
+import { db, levelUp } from "@/db";
 import { User } from "@/models";
 import { jwt } from "@/utils";
 import { IPublication } from '@/interfaces';
@@ -39,6 +39,9 @@ export async function POST(req: NextRequest) {
     await newPublication.save({ validateBeforeSave: true })
     await db.disconnect();
 
+    // level up
+    await levelUp((session.user as any)._id)
+
     return NextResponse.json({
       newPublication
     });
@@ -52,9 +55,18 @@ export async function POST(req: NextRequest) {
 
 
 export async function GET() {
+  var currentDateObj = new Date();
+  var numberOfMlSeconds = currentDateObj.getTime();
+  var addMlSeconds = 60 * 60000 * 8;
+  var currentDateMinusSixHours = new Date(numberOfMlSeconds - addMlSeconds);
   try {
     await db.connect();
-    const publications = await Publication.find().lean();
+    const publications = await Publication.find({
+      isPrivate: false, type: 'gratitude', createdAt: {
+        $gte: currentDateMinusSixHours,
+        $lt: numberOfMlSeconds
+      }
+    }).sort({ createdAt: 'descending' }).lean();
     await db.disconnect();
     return NextResponse.json({
       publications,

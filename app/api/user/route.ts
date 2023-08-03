@@ -37,3 +37,30 @@ export async function PUT(req: Request) {
     }, { status: 500 });
   }
 }
+export async function GET() {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse
+        .json({ message: "you must be authenticated to do this" }, { status: 401 });
+    }
+    await db.connect();
+    const user = await User.findById((session.user as any)._id).lean();
+    await db.disconnect();
+
+    if (!user) {
+      return NextResponse
+        .json({ message: "you must be authenticated to do this" }, { status: 401 });
+    }
+
+
+    return NextResponse.json({
+      ...user,
+    });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({
+      message: "Review server logs",
+    }, { status: 500 });
+  }
+}

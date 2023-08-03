@@ -1,6 +1,5 @@
-import { IPublication } from "../interfaces/publication";
-import { IUser } from "../interfaces/user";
 import mongoose, { Schema, model, type Model } from "mongoose";
+import { IPublication } from "../interfaces";
 
 const publicationSchema = new Schema(
   {
@@ -15,9 +14,12 @@ const publicationSchema = new Schema(
         required: true,
       }
     },
+    createdAt: Number,
+    updatedAt: Number,
   },
   {
-    timestamps: true,
+    // timestamps: true,
+    timestamps: { currentTime: () => Date.now() },
   }
 );
 

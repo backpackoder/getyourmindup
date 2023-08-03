@@ -2,7 +2,6 @@
 import PicOfThibaut from "@/assets/imgs/owners/Thibaut - Profile picture.jpg";
 import PicOfMiguel from "@/assets/imgs/owners/Miguel - Profile picture.jpg";
 import LOGO from "@/assets/imgs/logo/logo.png";
-import DEFAULT_PROFILE_IMAGE from "@/assets/imgs/default-profile-image.png";
 
 export const ROUTES = {
   HOME: "/",
@@ -112,7 +111,7 @@ export const OWNERS = {
 
 export const IMAGES = {
   LOGO,
-  DEFAULT_PROFILE_IMAGE,
+  DEFAULT_PROFILE_IMAGE: '@/assets/imgs/default-profile-image.png',
 };
 
 export const CLIENT_SIDE_URLS = {

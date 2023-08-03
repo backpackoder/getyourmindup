@@ -1,171 +1,172 @@
 "use client";
-import { useCallback, useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useWebSocket } from "next-ws/client";
+import { useContext, useEffect, useState } from "react";
 import {
   Alert,
-  AlertTitle,
   Box,
   Button,
   Checkbox,
   Chip,
   Grid,
+  IconButton,
   TextField,
   Typography,
 } from "@mui/material";
 import { getYourMindUpApi } from "@/api";
-import { SendOutlined } from "@mui/icons-material";
-import GradeIcon from "@mui/icons-material/Grade";
+import { RocketLaunchOutlined, SendOutlined } from "@mui/icons-material";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import { blue, purple, yellow } from "@mui/material/colors";
-import { UiContext } from "@/context";
+import { AuthContext, UiContext } from "@/context";
+import { SideThanks } from "./sideThanks";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Link from "next/link";
+import { useThanks } from "@/hooks/useThanks";
+import { FinishModule } from "../shared/finishModule";
 
-type FormData = { body: string; isPrivate: boolean };
 
 export function Thank() {
-  const ws = useWebSocket();
-  const { setOpenSnackbarSuccess, setOpenSnackbarError } = useContext(UiContext);
-  const [thanks, setThanks] = useState<string[]>([]);
-  const [isPrivate, setIsPrivate] = useState<boolean>(true);
+  const { user } = useContext(AuthContext);
   const {
-    register,
+    deleteThank,
+    errors,
     handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<FormData>();
-  const onCreatePublication = async ({ body, isPrivate }: FormData) => {
-    try {
-      const { data } = await getYourMindUpApi.post("/publications", { body, isPrivate });
-      ws?.send(JSON.stringify({ newThank: body }));
-      setOpenSnackbarSuccess(true);
-    } catch (error) {
-      setOpenSnackbarError(true);
-    }
-  };
+    onCreatePublication,
+    register,
+    isPrivate,
+    setIsPrivate,
+    thankInStorage,
+    thanks,
+    isLoading,
+    isModuleFinish,
+    setIsModuleFinish,
+  } = useThanks();
 
-  const onMessage = useCallback((event: MessageEvent) => {
-    const resp = JSON.parse(event.data);
-    if (!resp?.newThank) return;
-    const newThank = resp.newThank;
-    setThanks((t) => [...t, newThank]);
-  }, []);
 
-  useEffect(() => {
-    ws?.addEventListener("message", onMessage);
-    return () => ws?.removeEventListener("message", onMessage);
-  }, [onMessage, ws]);
 
-  useEffect(() => {
-    setValue("isPrivate", isPrivate);
-  }, [setValue, isPrivate]);
+  const [showSideThanks, setShowSideThanks] = useState<boolean>(true);
+  const [effectHide, setEffectHide] = useState<boolean>(false);
+
+
+  const onHideSideThanks = () => {
+    setEffectHide(true);
+    setTimeout(() => {
+      setEffectHide(false);
+      setShowSideThanks(false)
+    }, 700);
+  }
+
+
 
   return (
-    <Box
-      component={"article"}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "calc(100vh - 200px)",
-        gap: 4,
-      }}
-    >
-      <Typography variant="h3" component="h2">
-        Thank for something
-      </Typography>
+    <Grid container spacing={2}>
+      {
+        showSideThanks ?
+          (
+            <Grid item
+              xs={12}
+              md={4}
+              sx={{
+                marginLeft: -2,
+                mt: user ? -4.5 : { xs: 2, md: !user ? -7.5 : -10.1, lg: -4.5 },
+                mb: { xs: 4, sm: 2, md: 0 }
+              }}
+              className={effectHide ? "slide-left" : "slide-right"}>
+              <SideThanks thanks={thanks} onClick={onHideSideThanks} deleteThank={deleteThank} isLoading={isLoading} />
+            </Grid>
+          ) : (
+            <IconButton sx={{ backgroundColor: 'primary.main', color: 'white' }} onClick={() => setShowSideThanks(true)} type="button" size="large">
+              <ChevronRightIcon color="inherit" />
+            </IconButton>
 
-      <Typography variant="h6" component="p">
-        Give a thank for something that happened today that made you happy or that you are grateful
-        for.
-      </Typography>
-      <form onSubmit={handleSubmit(onCreatePublication)} noValidate>
-        <Grid container spacing={2} alignContent={"center"} justifyContent={"center"}>
-          <Grid item xs={12}>
-            <TextField
-              id="outlined-multiline-static"
-              label="Give a thank"
-              multiline
-              minRows={4}
-              className="w-full"
-              {...register("body", {
-                required: "Este campo es requerido",
-              })}
-              error={!!errors.body}
-              helperText={errors.body?.message}
-            />
-          </Grid>
-          <Grid item xs={12} textAlign={"center"}>
-            <Chip
-              label={isPrivate ? "Private thank you post" : "Public thank you post"}
-              clickable
-              color={isPrivate ? "primary" : "warning"}
-              variant="outlined"
-              onClick={() => setIsPrivate(!isPrivate)}
-              className="fadeIn"
-            />
-            <Checkbox
-              color={isPrivate ? "primary" : "warning"}
-              checked={isPrivate}
-              onChange={(e, idChecked) => setIsPrivate(idChecked)}
-              icon={<LockOpenIcon />}
-              checkedIcon={<LockIcon />}
-            />
-          </Grid>
+          )
 
-          <Grid item xs={12} textAlign={"center"}>
-            <Button
-              variant="contained"
-              type="submit"
-              endIcon={<SendOutlined sx={{ transform: "rotate(-25deg)" }} />}
-            >
-              I wanna thank for that today
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-      <Box
-        sx={{
-          position: { xs: "relative", md: "absolute" },
-          top: { xs: 10, md: 90 },
-          left: { md: 28 },
-        }}
-        className="fadeIn"
-      >
-        {thanks?.map((thank) => (
-          <Alert
-            key={thank}
-            icon={<GradeIcon sx={{ color: yellow[400] }} />}
-            sx={{ borderRadius: "4% / 50%", backgroundColor: blue[100], color: "black", mb: 2 }}
-            elevation={1}
-          >
-            <AlertTitle></AlertTitle>
-            {thank} - <strong>A person in the world</strong>
-          </Alert>
-        ))}
-        <Alert
-          icon={<GradeIcon sx={{ color: yellow[400] }} />}
-          sx={{ borderRadius: "4% / 50%", backgroundColor: blue[100], color: "black", mb: 2 }}
-          elevation={1}
-        >
-          I thank you for the beautiful day today - <strong>A person in the world</strong>
-        </Alert>
-        <Alert
-          icon={<GradeIcon sx={{ color: yellow[400] }} />}
-          sx={{ borderRadius: "20px", backgroundColor: blue[100], color: "black", mb: 2 }}
-          elevation={1}
-        >
-          I thank you for the beautiful day today - <strong>A person in the world</strong>
-        </Alert>
-        <Alert
-          icon={<GradeIcon sx={{ color: yellow[400] }} />}
-          sx={{ borderRadius: "20px", backgroundColor: blue[100], color: "black", mb: 2 }}
-          elevation={1}
-        >
-          I thank you for the beautiful day today - <strong>A person in the world</strong>
-        </Alert>
-      </Box>
-    </Box>
+      }
+      <Grid item xs={12} md={showSideThanks ? 8 : 12}>
+        {
+          isModuleFinish ? (
+
+            <FinishModule 
+                textToAgain="Do you want to say thanks again?" 
+                setIsModuleFinish={setIsModuleFinish}
+                href="/action" />
+              
+          )
+            : (
+              <Box
+                component={"article"}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "calc(100vh - 150px)",
+                  gap: 4,
+                }}
+              >
+                <Typography variant="h3" component="h2">
+                  Thank for something
+                </Typography>
+
+                <Typography variant="h6" component="p">
+                  Give a thank for something that happened today that made you happy or that you are grateful
+                  for.
+                </Typography>
+                <form onSubmit={handleSubmit((args) => onCreatePublication(args, !!user))} noValidate>
+                  <Grid container spacing={2} alignContent={"center"} justifyContent={"center"}>
+                    <Grid item xs={12}>
+                      <TextField
+                        id="outlined-multiline-static"
+                        label="Give a thank"
+                        multiline
+                        minRows={4}
+                        className="w-full"
+                        {...register("body", {
+                          required: "This field is required",
+                        })}
+                        variant="standard"
+                        defaultValue={thankInStorage?.body || ''}
+                        error={!!errors.body}
+                        helperText={errors.body?.message}
+                      />
+                    </Grid>
+                    <Grid item xs={12} textAlign={"center"}>
+                      <Chip
+                        label={isPrivate ? "Private thank you post" : "Public thank you post"}
+                        clickable
+                        color={isPrivate ? "primary" : "warning"}
+                        variant="outlined"
+                        onClick={() => setIsPrivate(!isPrivate)}
+                        className="fadeIn"
+                      />
+                      <Checkbox
+                        color={isPrivate ? "primary" : "warning"}
+                        checked={isPrivate}
+                        onChange={(e, idChecked) => setIsPrivate(idChecked)}
+                        icon={<LockOpenIcon />}
+                        checkedIcon={<LockIcon />}
+                      />
+                    </Grid>
+
+                    {
+                      thankInStorage && !user && (
+                        <Alert sx={{ mt: 1, }} severity="info"><Link href='/auth/login?p=/thanks'>Log In </Link> to continue enjoying this module - <Link href='/auth/login?p=/thanks'><strong> Log In</strong></Link> </Alert>
+                      )
+                    }
+                    <Grid item xs={12} textAlign={"center"}>
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        disabled={!!thankInStorage && !user}
+                        endIcon={<SendOutlined sx={{ transform: "rotate(-25deg)" }} />}
+                      >
+                        I wanna thank for that today
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
+              </Box>
+            )
+        }
+      </Grid>
+    </Grid >
   );
 }

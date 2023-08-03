@@ -1,19 +1,19 @@
 "use client"
 import { createTheme } from '@mui/material/styles';
-import { blue, red,  } from '@mui/material/colors';
+import { amber, blue, red, teal,  } from '@mui/material/colors';
 
 
 export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#2196f3'
+      main: blue[900]
     },
     secondary: {
-      main: '#4dabf5'
+      main: amber[800]
     },
     info: {
-      main: '#3f50b5'
+      main: teal[900]
     }
   },
   components: {
@@ -25,12 +25,12 @@ export const lightTheme = createTheme({
     MuiAppBar: {
       defaultProps: {
         elevation: 0,
-        position: 'fixed',
       },
       styleOverrides: {
         root: {
-          backgroundColor: blue[300],
-          height: 60
+          backgroundColor: blue[900],
+          height: 60,
+          color: 'white'
         },
       }
     },

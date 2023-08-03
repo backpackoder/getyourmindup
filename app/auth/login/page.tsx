@@ -5,7 +5,6 @@ import { getProviders, signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Box, Grid, Typography, TextField, Button, Chip, Divider } from "@mui/material";
-import { AuthLayout } from "@/components/layouts/authLayout";
 import { validations } from "@/utils";
 import { ErrorOutline } from "@mui/icons-material";
 import { redirect } from "next/navigation";
@@ -35,8 +34,13 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
 
   const onLoginForm = async ({ email, password }: FormData) => {
     setShowError(false);
-    await signIn("credentials", { email, password });
+    try {
+      const resp = await signIn("credentials", { email, password });
+      console.log(resp);
 
+    } catch (error) {
+      console.log(error);
+    }
     // const isValidLogin = await onLoginUser(email, password);
     // if (!isValidLogin) {
     //   setShowError(true)
@@ -48,7 +52,12 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
   };
 
   return (
-    <AuthLayout title="Ingresar">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="calc(100vh - 200px)"
+    >
       <form onSubmit={handleSubmit(onLoginForm)} noValidate>
         <Box sx={{ width: 350, padding: "10px 20px" }}>
           <Grid container>
@@ -71,7 +80,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
                 label="Email"
                 type="email"
                 {...register("email", {
-                  required: "Este campo es requerido",
+                  required: "This field is required",
                   validate: validations.isEmail,
                 })}
                 error={!!errors.email}
@@ -88,8 +97,8 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
                 variant="filled"
                 fullWidth
                 {...register("password", {
-                  required: "Este campo es requerido",
-                  minLength: { value: 6, message: "Mínimo 6 caracteres" },
+                  required: "This field is required",
+                  minLength: { value: 6, message: "Min 6 characters" },
                 })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
@@ -98,7 +107,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
 
             <Grid item xs={12} mt={2}>
               <Button size="large" fullWidth type="submit" disabled={showError}>
-                Ingresar
+                Log In
               </Button>
             </Grid>
 
@@ -107,7 +116,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
                 href={`/auth/register?p=${searchParams?.p?.toString() || "/"}`}
                 style={{ textDecoration: "underline" }}
               >
-                ¿No tienes cuenta?
+                You do not have an account?
               </Link>
             </Grid>
 
@@ -136,7 +145,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
           </Grid>
         </Box>
       </form>
-    </AuthLayout>
+    </Box>
   );
 };
 

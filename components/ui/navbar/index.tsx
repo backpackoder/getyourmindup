@@ -1,80 +1,92 @@
 "use client";
+import { useContext } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { AppBar, Box, Button, IconButton, List, Toolbar } from "@mui/material";
+import MenuOutlineIcon from "@mui/icons-material/MenuOutlined";
+import { AuthContext, UiContext } from "@/context";
+// Components
+import { Logo } from "../Logo";
+import Avatar from './Avatar';
+import { HideOnScroll } from './HideOnScroll'
+import { NAVBAR_ITEMS } from "@/components/ui/navbar/constants/navbarItems";
+// Utils
+import { IMAGES } from "@/commons/commons";
+import { amber, blue } from "@mui/material/colors";
 
-import Link from "next/link";
-import React, { useContext, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { AppBar, Toolbar, Box, Button } from "@mui/material";
-import { UiContext } from "@/context";
 
-import { Home, VolunteerActivism, Diversity1, SelfImprovement } from "@mui/icons-material";
-// Commons
-import { ROUTES } from "@/commons/commons";
-import { Logo } from "@/components/Logo";
-const { GOOD_ACTION_OF_THE_DAY, HOME, RELAX_YOUR_MIND, THANK_FOR_SOMETHING } = ROUTES;
 
-const routes = [
-  { icon: <Home />, label: "Home", path: HOME },
-  { icon: <VolunteerActivism />, label: "Good action of the day", path: GOOD_ACTION_OF_THE_DAY },
-  { icon: <Diversity1 />, label: "Thank for something", path: THANK_FOR_SOMETHING },
-  { icon: <SelfImprovement />, label: "Relax your mind", path: RELAX_YOUR_MIND },
-];
-
-type Routes = typeof routes;
-
-export const Navbar = () => {
-  const { toggleSideMenu } = useContext(UiContext);
-  const { push } = useRouter();
+export function NavbarMain() {
   const asPath = usePathname();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-
-  const onSearchTerm = () => {
-    if (searchTerm.trim().length === 0) return;
-    push(`/search/${searchTerm}`);
-  };
-
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
+  const { toggleSideMenu } = useContext(UiContext);
   return (
-    <AppBar>
-      <Toolbar>
-        <Link href="/" passHref style={{ display: "flex", alignItems: "center" }}>
+    <HideOnScroll>
+      <AppBar elevation={1}>
+        <Toolbar>
           <Logo width={35} height={35} />
-        </Link>
-        <Box flex={1} />
-        <Box
-          sx={{ display: isSearchVisible ? "none" : { xs: "none", sm: "block" } }}
-          className="fadeIn"
-        >
-          {routes.map((route, index) => {
-            // const isActive = pathname === route.path;
+          <Box flex={1} />
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+            {NAVBAR_ITEMS.APP.primary.map((route) => {
+              const isActive = asPath === route.path;
 
-            return (
-              <Link key={route.path} href={route.path}>
-                <Button startIcon={route.icon} color={asPath === route.path ? "primary" : "info"}>
-                  {route.label}
-                </Button>
-              </Link>
-            );
-            // return (
-            //   <li
-            //     key={index}
-            //     className="w-full sm:flex sm:justify-center"
-            //     onClick={() => setIsOpen((prev) => !prev)}
-            //   >
-            //     <Link
-            //       href={route.path}
-            //       className={`flex items-center gap-2 ${isActive ? "text-blue-500" : "text-black"
-            //         } text-center duration-150 hover:text-blue-500`}
-            //     >
-            //       {route.icon} {route.label}
-            //     </Link>
-            //   </li>
-            // );
-          })}
-        </Box>
+              return <Button sx={{
+                // mx: 1,
+                textDecoration: isActive ? 'underline' : 'none',
+                textDecorationColor: amber[800],
+                textDecorationStyle: 'solid',
+                textUnderlineOffset: '8px',
+                textDecorationThickness: '2px',
+                height: 60,
+                fontWeight: 500,
+                color: "white",
+                fontSize: 18,
+                transitionDuration: "0.25s",
+                cursor: "pointer",
+                ":hover": {
+                  backgroundColor: blue['A700'],
+                  borderRadius: 2
+                },
+              }} key={route.path} href={route.path} startIcon={route.icon} >{route.label}</Button>;
+            })}
 
-        <Box flex={1} />
-        <Button onClick={toggleSideMenu}>Menú</Button>
-      </Toolbar>
-    </AppBar>
+          </Box>
+          <Box flex={1} />
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 2,
+            }}
+            className="fadeIn"
+          >
+
+            {user ? (
+              <>
+                <Avatar name={user.name} level={user?.level || 1} imgUrl={IMAGES.DEFAULT_PROFILE_IMAGE} />
+
+              </>
+            ) : (
+              NAVBAR_ITEMS.notLogged.map((route) => {
+                return (
+                  <Button variant={route.label === 'Sign in' ? 'outlined' : 'contained'} sx={{ backgroundColor: route.label === 'Sign in' ? "primary.main" : "secondary.main", color: 'white', border: 'none' }} key={route.path(asPath)} onClick={() => router.push(route.path(asPath))}>
+                    {route.icon && <> {route.icon}&nbsp;</>} {route.label}
+                  </Button>
+                );
+              })
+            )}
+            <IconButton color="inherit" size="large" edge="end" onClick={toggleSideMenu}>
+              <MenuOutlineIcon />
+            </IconButton>
+          </Box>
+
+
+        </Toolbar>
+      </AppBar>
+    </HideOnScroll>
   );
-};
+}
+
+

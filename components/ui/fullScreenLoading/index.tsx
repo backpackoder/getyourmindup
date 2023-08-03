@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 
-export const FullScreenLoading = () => {
+export const FullScreenLoading = ({ color }: { color?: string; }) => {
   return (
     <Box
       display="flex"
@@ -9,8 +9,8 @@ export const FullScreenLoading = () => {
       alignItems="center"
       height="calc(100vh - 200px)"
     >
-        <Typography mb={2} variant='h2' fontWeight={200} >Loading...</Typography>
-        <CircularProgress thickness={2} />
+      <Typography mb={2} variant='h2' sx={{ color: color || "inherit" }} fontWeight={200} >Loading...</Typography>
+      <CircularProgress sx={{ color: color || "primary.main" }} thickness={2} />
 
     </Box>
   );
