@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+require('next-ws/server').verifyPatch();
 
 module.exports = {
   images: {
@@ -6,6 +7,10 @@ module.exports = {
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "i.scdn.co",
       },
     ],
   },

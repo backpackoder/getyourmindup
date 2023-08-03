@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server'
- 
-export async function GET() {
-  // const res = await fetch('https://data.mongodb-api.com/...', {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'API-Key': process.env.DATA_API_KEY,
-  //   },
-  // })
-  // const data = await res.json()
- 
-  return NextResponse.json({ data: 'Hola mundo' })
+import { db } from "@/db";
+import { User } from "@/models";
+import { jwt } from "@/utils";
+import { cookies } from 'next/headers';
+import { IUser } from '../../interfaces/user';
+
+export async function GET(req: Request) {
+  return NextResponse.json({
+    message: 'Hello'
+  });
+
 }
