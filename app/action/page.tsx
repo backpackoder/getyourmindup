@@ -1,6 +1,5 @@
 import { GoodActionOfTheDay } from "@/components/goodActionOfTheDay/GoodActionOfTheDay";
 
-
 export default function Action() {
-  return (<GoodActionOfTheDay />);
+  return <div>Action page</div>;
 }
