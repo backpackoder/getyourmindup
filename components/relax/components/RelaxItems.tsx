@@ -4,6 +4,7 @@ import { RelaxRow } from "./RelaxRow";
 
 // Commons
 import { ROUTES } from "@/commons/commons";
+import { FullScreenLoading } from "@/components/ui";
 
 // Utils
 import { getMusicPlaylists } from "@/utils/spotify/music/getCategorysPlaylists/getMusicPlaylists";
@@ -11,7 +12,10 @@ import { getPodcastsThemes } from "@/utils/spotify/podcasts/getPodcastsThemes";
 
 export async function RelaxItemMusic() {
   const playlists = await getMusicPlaylists();
-
+  console.log({playlists});
+  if (!playlists) {
+    return <FullScreenLoading />
+  }
   return (
     <RelaxItem title="Music">
       <RelaxRow

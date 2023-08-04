@@ -2,8 +2,8 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { getYourMindUpApi } from "@/api";
 import { IPublication } from "@/interfaces";
-import { useWebSocket } from "next-ws/client";
-import { AuthContext, UiContext } from "@/context";
+
+import { AuthContext, SocketContext, UiContext } from "@/context";
 import { FormData } from "@/components/thank/types";
 import { useForm } from "react-hook-form";
 
@@ -14,7 +14,8 @@ const getThanks = async () => {
 }
 
 export const useThanks = () => {
-  const ws = useWebSocket();
+
+  const { socket } = useContext(SocketContext);
   const { setOpenSnackbarSuccess, setOpenSnackbarError } = useContext(UiContext);
   const { onLevelUp } = useContext(AuthContext);
   const {
@@ -50,7 +51,7 @@ export const useThanks = () => {
     try {
       const { data } = await getYourMindUpApi.post("/thanks", { body, isPrivate });
       if (!isPrivate) {
-        ws?.send(body);
+        socket.emit('newThank', body);
       }
       onLevelUp()
       setThanks([{ body, itWasMe: true, _id: new Date().getTime().toString() } as IPublication, ...thanks,])
@@ -63,19 +64,14 @@ export const useThanks = () => {
     }
   };
 
-  const onMessage = useCallback((event: MessageEvent) => {
-    const resp = event.data.text();
-    const newThank = resp;
-    setThanks((t) => [{ body: newThank, itWasMe: false, _id: new Date().getTime().toString() } as IPublication, ...t,]);
-  }, [setThanks]);
-
   useEffect(() => {
     if (localStorage.getItem('thank')) {
       setThankInStorage(JSON.parse(localStorage.getItem('thank')!));
     }
-    ws?.addEventListener("message", onMessage);
-    return () => ws?.removeEventListener("message", onMessage);
-  }, [onMessage, ws]);
+    socket.on('newThank', newThank => {
+      setThanks((t) => [{ body: newThank, itWasMe: false, _id: new Date().getTime().toString() } as IPublication, ...t,]);
+    });
+  }, [socket]);
 
   const deleteThank = (_id: string) => {
     setThanks(thanks.filter(t => t._id !== _id))
