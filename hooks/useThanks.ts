@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { getYourMindUpApi } from "@/api";
+import { getYourMindUpApi } from "@/services";
 import { IPublication } from "@/interfaces";
 
 import { AuthContext, SocketContext, UiContext } from "@/context";

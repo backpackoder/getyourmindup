@@ -9,7 +9,7 @@ type AuthProviderProps = {
 
 export function AuthSessionProvider({ children }: AuthProviderProps) {
   return (
-    <SessionProvider>
+    <SessionProvider basePath="/api/auth">
 
       <AuthProvider >
         {children}

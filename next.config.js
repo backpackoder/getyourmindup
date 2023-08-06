@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 module.exports = {
+  env: {
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL
+  },
   images: {
     remotePatterns: [
       {

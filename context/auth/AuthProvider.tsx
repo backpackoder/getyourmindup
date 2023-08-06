@@ -8,7 +8,7 @@ import { signOut, useSession } from 'next-auth/react';
 import confetti from "canvas-confetti";
 import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
-import { getYourMindUpApi } from '@/api';
+import { getYourMindUpApi } from '@/services';
 import { FormDataUser } from "@/app/auth/register/page";
 import { FullScreenLoading } from "@/components/ui";
 import Link from "next/link";

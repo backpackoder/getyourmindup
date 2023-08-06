@@ -1,4 +1,4 @@
-import { getYourMindUpApi } from "@/api";
+import { getYourMindUpApi } from "@/services";
 import { AuthContext } from "@/context";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useContext } from "react";

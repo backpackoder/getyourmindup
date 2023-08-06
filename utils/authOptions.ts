@@ -21,6 +21,7 @@ export const authOptions: NextAuthOptions = {
     // }),
     Credentials({
       name: "Custom Login",
+
       credentials: {
         email: {
           label: "Email",
@@ -53,8 +54,14 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
     updateAge: 86400, // 1 day
   },
-
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      return true
+    },
+    async redirect(params) {
+      return params.url;
+
+    },
     async jwt({ token, account, user }: any) {
       if (account) {
         token.accessToken = account.access_token;
@@ -76,4 +83,5 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  
 };
