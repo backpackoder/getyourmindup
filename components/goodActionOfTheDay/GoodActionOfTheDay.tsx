@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Comment } from "./comment";
 import { AuthContext } from "@/context";
-import { getYourMindUpApi } from "@/api";
+import { getYourMindUpApi } from "@/services";
 import { useRouter } from "next/navigation";
 import RocketLaunchOutlinedIcon from '@mui/icons-material/RocketLaunchOutlined';
 import { IActionsOfTheDay } from "@/interfaces";

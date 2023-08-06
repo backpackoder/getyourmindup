@@ -1,6 +1,6 @@
 export const actionsOfTheDay = [
-  { body: "Meet a new person" },
   { body: "Take a long walk outdoors" },
+  { body: "Meet a new person" },
   { body: "Take a few minutes to breathe deeply and relax" },
   { body: "Call someone you care about" },
   { body: "Write down five positive things that happened to you today" },

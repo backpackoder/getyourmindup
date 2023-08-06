@@ -54,7 +54,7 @@ export const SideMenu = () => {
           })}
 
         {
-          user && (
+          user && !isDashboardMenuOpen && (
             <ListItemTemplate
               route={{ icon: <FolderShared />, label: "Dashboard", path: null, handleMenu: "dashboard" }}
               isActive={false}

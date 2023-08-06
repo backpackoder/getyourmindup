@@ -11,7 +11,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { getYourMindUpApi } from "@/api";
+import { getYourMindUpApi } from "@/services";
 import { RocketLaunchOutlined, SendOutlined } from "@mui/icons-material";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";

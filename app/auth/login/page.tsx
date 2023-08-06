@@ -28,16 +28,22 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
   const [providers, setProviders] = useState<any>({});
   useEffect(() => {
     getProviders().then((prov) => {
-      setProviders(prov);
-    });
+      console.log(prov);
+      if (prov) {
+        setProviders(prov);
+      }
+    }).catch(console.log);
   }, []);
 
   const onLoginForm = async ({ email, password }: FormData) => {
     setShowError(false);
     try {
-      const resp = await signIn("credentials", { email, password });
+      const resp = await signIn("credentials", { email, password, redirect: false });
       console.log(resp);
+      if (resp?.error) {
 
+        setShowError(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +69,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="h1" component="h1">
-                Iniciar Sesión
+                Sign in
               </Typography>
 
               <Chip
@@ -107,7 +113,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
 
             <Grid item xs={12} mt={2}>
               <Button size="large" fullWidth type="submit" disabled={showError}>
-                Log In
+                Sign in
               </Button>
             </Grid>
 
@@ -116,7 +122,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
                 href={`/auth/register?p=${searchParams?.p?.toString() || "/"}`}
                 style={{ textDecoration: "underline" }}
               >
-                You do not have an account?
+                Don`t you have an account?
               </Link>
             </Grid>
 
@@ -126,7 +132,7 @@ const LoginPage = ({ searchParams }: { searchParams?: { p?: string } }) => {
                 Or connect with:
               </Typography>
 
-              {Object.values(providers).map((provider: any) => {
+              {Object.values(providers)?.map((provider: any) => {
                 if (provider.id === "credentials") return <div key="credencials"></div>;
                 return (
                   <Button
