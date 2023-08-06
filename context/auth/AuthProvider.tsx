@@ -1,11 +1,10 @@
 "use client";
 
-import { FC, useEffect, useReducer } from 'react';
+import { FC, useContext, useEffect, useReducer } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
-import { useWebSocket } from "next-ws/client";
 import confetti from "canvas-confetti";
 import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
@@ -15,6 +14,7 @@ import { FullScreenLoading } from "@/components/ui";
 import Link from "next/link";
 import { Alert, Box } from "@mui/material";
 import { StepperCore } from '@/components/ui/stepperCore';
+import { SocketContext } from '../socket';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -40,14 +40,14 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   const { data, status } = useSession();
   const asPath = usePathname()
   const [state, dispatch] = useReducer(authReducer, AuthInitialState);
-  const ws = useWebSocket();
+  const { socket } = useContext(SocketContext);
 
   const onRegisterLocalStorage = async (body: string, isPrivate: boolean) => {
     localStorage.removeItem('thank')
     try {
       const { data } = await getYourMindUpApi.post("/thanks", { body, isPrivate });
       if (!isPrivate) {
-        ws?.send(body);
+        socket?.emit('newThank', body);
       }
 
     } catch (error) {

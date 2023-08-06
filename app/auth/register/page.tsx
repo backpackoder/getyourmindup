@@ -245,6 +245,7 @@ const RegisterPage = ({ searchParams,
             <Grid item xs={12}>
               <Button
                 color="secondary"
+                variant="contained"
                 className="circular-btn"
                 size="large"
                 fullWidth

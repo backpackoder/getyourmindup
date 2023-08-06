@@ -17,8 +17,9 @@ type RelaxRowItemProps = {
 export async function RelaxRowItem({ name, item }: RelaxRowItemProps) {
   function getData(): AccordionDatas {
     switch (name) {
-      case "Music":
+      case "Music":2
         const playlist = item as unknown as GetPlaylist;
+        console.log(playlist?.category);
         const getPlaylistCoverImages = () => {
           let images: AccordionDatasImage[] = [];
 

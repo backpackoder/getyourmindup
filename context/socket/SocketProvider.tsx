@@ -1,7 +1,8 @@
-
 "use client";
 import { type FC } from 'react';
-import { WebSocketProvider } from 'next-ws/client';
+import { SocketContext } from '.';
+import { useSocket } from '../../hooks/useSocket';
+
 // export interface SocketState {
 //   prop1: boolean;
 // }
@@ -15,10 +16,11 @@ interface Props {
 }
 
 export const SocketProvider: FC<Props> = ({ children }) => {
-  return (
-    <WebSocketProvider url="ws://localhost:3000/api/socket/io">
+  const { socket, isOnline } = useSocket('https://basic-socket-ffp4-dev.fl0.io/');
 
+  return (
+    <SocketContext.Provider value={{ socket, isOnline }}>
       {children}
-    </WebSocketProvider >
+    </SocketContext.Provider>
   );
 };

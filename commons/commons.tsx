@@ -85,8 +85,8 @@ export const OWNERS = {
     NAME: "Miguel",
     SURNAME: "Herrera",
     PICTURE: PicOfMiguel,
-    JOB: "Fullstack web developer",
-    BIO: "I am a fullstack web developer, I like to learn new things and I am passionate about technology.",
+    JOB: "Full Stack developer",
+    BIO: "3 years of experiencies, programmer passionate about software development, specialized in the Front-end. excellent teamwork, autonomous and always giving the best.",
     CONTACT: {
       PHONE: null,
       LINKEDIN: "https://www.linkedin.com/in/miguel-herrera-86a8a71a4/",

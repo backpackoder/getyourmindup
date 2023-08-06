@@ -7,7 +7,7 @@ export function Relax() {
       <h2 className="text-4xl font-medium">Relax your mind</h2>
 
       <RelaxItemMusic />
-      <RelaxItemPodcasts />
+      {/* <RelaxItemPodcasts /> */}
     </article>
   );
 }
